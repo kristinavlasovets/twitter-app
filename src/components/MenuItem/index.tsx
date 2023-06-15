@@ -13,7 +13,7 @@ const MenuItem: FC<MenuItemProps> = ({ path, src, alt, text, id }) => {
     );
   }
   return (
-    <Wrapper to={path}>
+    <Wrapper to={path} data-testid="profileButton">
       <Icon src={src} alt={alt} />
       {text}
     </Wrapper>

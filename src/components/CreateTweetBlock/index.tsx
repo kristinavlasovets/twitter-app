@@ -123,6 +123,7 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
         </TextAreaWrapper>
 
         <Button
+          data-testid="createTweetButton"
           type="submit"
           width={theme?.width.xs}
           backgroundColor={Colors.DARK_BLUE}

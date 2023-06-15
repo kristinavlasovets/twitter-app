@@ -56,7 +56,11 @@ const UserBanner: FC<UserBannerProps> = ({ photo, name, email, gender, telegram,
           <Credentials>{followersText}</Credentials>
         </Statistics>
       </UserInfo>
-      {id === authUserId && <Button onClick={onHandlerEditProfile}>{buttonText}</Button>}
+      {id === authUserId && (
+        <Button data-cy="editButton" onClick={onHandlerEditProfile}>
+          {buttonText}
+        </Button>
+      )}
       {createPortal(
         <UserEditModal setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible} />,
         document.body

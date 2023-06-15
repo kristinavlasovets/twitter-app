@@ -40,7 +40,7 @@ const Header: FC<HeaderProps> = ({ tweetsCount }) => {
   };
 
   return isAuth ? (
-    <HeaderWrapper>
+    <HeaderWrapper data-cy="header">
       {(isProfilePath && pathId === ':id') || isProfilePath ? (
         <HeaderNav>
           <Title>{isFeedPath ? title : name}</Title>
@@ -58,8 +58,9 @@ const Header: FC<HeaderProps> = ({ tweetsCount }) => {
         </HeaderHomeNav>
       )}
       <ToggleSwitch
+        data-cy="toggleTheme"
         type={inputType}
-        checked={currentTheme === ThemeMode.DARK}
+        checked={currentTheme === ThemeMode.LIGHT}
         onChange={onHandlerToggleTheme(
           currentTheme === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK
         )}

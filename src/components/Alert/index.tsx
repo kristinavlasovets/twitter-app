@@ -21,7 +21,7 @@ const Alert: FC = () => {
   if (!isVisible) {
     return null;
   }
-  return <Message>{message}</Message>;
+  return <Message data-cy="errorAlert">{message}</Message>;
 };
 
 export default Alert;

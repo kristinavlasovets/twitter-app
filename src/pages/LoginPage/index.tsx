@@ -63,8 +63,18 @@ const LoginPage: FC = () => {
     <Wrapper onSubmit={handleSubmit(onHandlerLogin)}>
       <Icon src={MyLogoSvg} alt={twitterLogoAlt} />
       <Title>{title}</Title>
-      <Input placeholder={emailPlaceholder} type={emailType} {...register('email')} />
-      <Input placeholder={passwordPlaceholder} type={passwordType} {...register('password')} />
+      <Input
+        data-cy="emailField"
+        placeholder={emailPlaceholder}
+        type={emailType}
+        {...register('email')}
+      />
+      <Input
+        data-cy="passwordField"
+        placeholder={passwordPlaceholder}
+        type={passwordType}
+        {...register('password')}
+      />
       <Button
         type="submit"
         backgroundColor={Colors.DARK_BLUE}

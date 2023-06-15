@@ -113,6 +113,7 @@ const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisib
         <Title>{title}</Title>
         <Credentials>{nameText}</Credentials>
         <Input
+          data-cy="nameField"
           placeholder={currName}
           type="text"
           {...register('name', { maxLength: maxLengthValue, pattern: namePattern })}
@@ -120,15 +121,21 @@ const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisib
         {errors.name && <ErrorText>{nameError}</ErrorText>}
         <Credentials>{surnameText}</Credentials>
         <Input
+          data-cy="surnameField"
           placeholder={currSurname}
           type="text"
           {...register('surname', { maxLength: maxLengthValue, pattern: namePattern })}
         />
         {errors.surname && <ErrorText>{surnameError}</ErrorText>}
         <Credentials>{telegramText}</Credentials>
-        <Input placeholder={currTelegram} type="text" {...register('telegram')} />
+        <Input
+          data-cy="telegramField"
+          placeholder={currTelegram}
+          type="text"
+          {...register('telegram')}
+        />
         <Credentials>{genderText}</Credentials>
-        <Input placeholder={currGender} type="text" {...register('gender')} />
+        <Input data-cy="genderField" placeholder={currGender} type="text" {...register('gender')} />
         <Credentials>{passwordText}</Credentials>
         <Input
           placeholder={currPassword}

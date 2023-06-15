@@ -18,6 +18,8 @@ const Button: FC<ButtonProps> = ({
   onClick,
 }) => (
   <Wrapper
+    data-cy="logInButton"
+    data-testid="createTweetButton"
     height={height}
     width={width}
     backgroundColor={backgroundColor}

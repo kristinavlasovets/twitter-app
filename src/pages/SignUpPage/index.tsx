@@ -136,12 +136,14 @@ const SignUpPage: FC = () => {
       </IconWrapper>
       <Title>{title}</Title>
       <Input
+        data-cy="nameField"
         placeholder={namePlaceholder}
         type={textType}
         {...register('name', { required: true, maxLength: maxLengthValue, pattern: namePattern })}
       />
-      {errors.name && <ErrorText>{nameError}</ErrorText>}
+      {errors.name && <ErrorText data-cy="nameError">{nameError}</ErrorText>}
       <Input
+        data-cy="phoneField"
         placeholder={phonePlaceholder}
         type={textType}
         {...register('phone', {
@@ -150,16 +152,18 @@ const SignUpPage: FC = () => {
           pattern: phonePattern,
         })}
       />
-      {errors.phone && <ErrorText>{phoneError}</ErrorText>}
+      {errors.phone && <ErrorText data-cy="phoneError">{phoneError}</ErrorText>}
       <Input
+        data-cy="emailField"
         placeholder={emailPlaceholder}
         type={emailType}
         {...register('email', {
           required: true,
         })}
       />
-      {errors.email && <ErrorText>{emailError}</ErrorText>}
+      {errors.email && <ErrorText data-cy="emailError">{emailError}</ErrorText>}
       <Input
+        data-cy="passwordField"
         placeholder={passwordPlaceholder}
         type={passwordType}
         {...register('password', {
@@ -168,7 +172,7 @@ const SignUpPage: FC = () => {
           maxLength: maxLengthValue,
         })}
       />
-      {errors.password && <ErrorText>{passwordError}</ErrorText>}
+      {errors.password && <ErrorText data-cy="passwordError">{passwordError}</ErrorText>}
       <TextLink to={AppRoutes.HOME}>{linkText}</TextLink>
       <Subtitle>{subTitle}</Subtitle>
       <Text>{infoText}</Text>

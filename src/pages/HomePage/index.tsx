@@ -149,7 +149,9 @@ const HomePage: FC = () => {
               {signUpGoogleText}
             </ButtonWithIcon>
           </ButtonWrapper>
-          <ButtonLink to={SIGN_UP}>{signUpEmailText}</ButtonLink>
+          <ButtonLink data-cy="signUpLink" to={SIGN_UP}>
+            {signUpEmailText}
+          </ButtonLink>
           <Text>
             {termsText}
             <TextLink to={navLinks[2].to}>{navLinks[2].name}</TextLink>
@@ -161,7 +163,9 @@ const HomePage: FC = () => {
           </Text>
           <Text>
             {question}
-            <TextLink to={LOGIN}>{loginText}</TextLink>
+            <TextLink data-cy="logInLink" to={LOGIN}>
+              {loginText}
+            </TextLink>
           </Text>
         </Form>
       </Main>
