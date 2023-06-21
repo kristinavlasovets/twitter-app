@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
-import { createPortal } from 'react-dom';
 
-import MyPhotoSvg from '@/assets/photo.svg';
-import { userBannerText } from '@/constants/config';
+import { userBannerText } from '@/constants/config/components';
+import { icons } from '@/constants/icons';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { userSelector } from '@/store/slices/userSlice/selectors';
+import { createNewPortal } from '@/utils/helpers/createNewPortal';
 
 import UserEditModal from '../UserEditModal';
 
@@ -25,6 +25,7 @@ import { UserBannerProps } from './types';
 const { buttonText, twitterAlt, followersText, followingText, followersCount, followingCount } =
   userBannerText;
 
+const { MyPhotoSvg } = icons;
 const UserBanner: FC<UserBannerProps> = ({ photo, name, email, gender, telegram, id }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const {
@@ -61,9 +62,8 @@ const UserBanner: FC<UserBannerProps> = ({ photo, name, email, gender, telegram,
           {buttonText}
         </Button>
       )}
-      {createPortal(
-        <UserEditModal setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible} />,
-        document.body
+      {createNewPortal(
+        <UserEditModal setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible} />
       )}
     </Wrapper>
   );

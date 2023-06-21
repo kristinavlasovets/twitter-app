@@ -3,17 +3,11 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { createDocument } from '@/api/firebase/createDocument';
 import { getDocument } from '@/api/firebase/getDocument';
-import MyBanner from '@/assets/back-twitter.png';
-import MyGoogleSvg from '@/assets/google.svg';
-import MyLogoSvg from '@/assets/logo.svg';
 import Alert from '@/components/Alert';
 import { AppRoutes } from '@/components/AppRouter/types';
-import {
-  defaultValueUserSignUp,
-  FirebaseCollections,
-  Gender,
-  homePageText,
-} from '@/constants/config';
+import { defaultValueUserSignUp, FirebaseCollections, Gender } from '@/constants/config';
+import { homePageText } from '@/constants/config/pages';
+import { icons } from '@/constants/icons';
 import { useActions } from '@/hooks/useActions';
 import { auth } from '@/lib/firebase';
 import { IUser } from '@/types';
@@ -71,6 +65,8 @@ const {
   defaultToken,
 } = defaultValueUserSignUp;
 
+const { MyBanner, MyGoogleSvg, MyLogoSvg } = icons;
+
 const { SIGN_UP, LOGIN } = AppRoutes;
 
 const HomePage: FC = () => {
@@ -88,6 +84,7 @@ const HomePage: FC = () => {
 
       const id = user.uid;
       const name = user.displayName?.split(' ')[0] || defaultName;
+      const nameLowercase = name.toLowerCase();
       const phone = defaultPhone;
       const surname = user.displayName?.split(' ')[1] || defaultSurname;
       const photo = user.photoURL || defaultPhoto;
@@ -102,6 +99,7 @@ const HomePage: FC = () => {
       const newUser = {
         id: user?.uid,
         name,
+        nameLowercase,
         phone,
         surname,
         photo,

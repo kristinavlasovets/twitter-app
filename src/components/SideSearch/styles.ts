@@ -15,6 +15,11 @@ export const Wrapper = styled.header`
     padding: ${({ theme }) => theme.paddings.xs}px;
     width: ${({ theme }) => theme.width.xl}%;
   }
+
+  @media (max-width: ${({ theme }) => theme.dimensions.tablet}px) {
+    padding: ${({ theme }) => theme.paddings.xs}px;
+    width: ${({ theme }) => theme.width.l}%;
+  }
 `;
 
 export const SearchWrapper = styled.form`
@@ -45,6 +50,10 @@ export const Input = styled.input`
   &::placeholder {
     ${({ theme }) => theme.opacities.m};
   }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const Button = styled.button`
@@ -63,6 +72,11 @@ export const Icon = styled.img`
   &:hover {
     transform: scale(1.1);
     opacity: ${({ theme }) => theme.opacities.l};
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    width: ${({ theme }) => theme.width.s}px;
+    height: ${({ theme }) => theme.height.s}px;
   }
 `;
 
@@ -105,6 +119,10 @@ export const TextLink = styled(Link)`
     text-decoration: underline;
     cursor: pointer;
   }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.s}px;
+  }
 `;
 
 export const Nav = styled.ul`
@@ -120,6 +138,10 @@ export const NavItem = styled.li`
   margin-top: ${({ theme }) => theme.margins.xs}%;
   margin-left: ${({ theme }) => theme.margins.xs}%;
   font-size: ${({ theme }) => theme.fontSizes.xxxs}px;
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.s}px;
+  }
 `;
 
 export const NavItemLink = styled(Link)`

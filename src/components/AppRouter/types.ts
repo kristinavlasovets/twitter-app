@@ -11,5 +11,11 @@ export enum AppRoutes {
   LOGIN = '/login',
   PROFILE = '/profile/:id',
   FEED = '/feed/:id',
+  EXPLORE = '/explore',
+  NOTIFICATIONS = '/notifications',
+  MESSAGES = '/messages',
+  BOOKMARKS = '/bookmarks',
+  LISTS = '/lists',
+  MORE = '/more',
   NOT_FOUND = '*',
 }

@@ -14,6 +14,14 @@ export const Wrapper = styled.form`
     padding: ${({ theme }) => theme.paddings.xs}px;
     width: ${({ theme }) => theme.width.xl}%;
   }
+
+  @media (max-width: ${({ theme }) => theme.dimensions.tablet}px) {
+    width: ${({ theme }) => theme.width.m}%;
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    margin: ${({ theme }) => theme.margins.ss}% auto;
+  }
 `;
 
 export const Icon = styled.img`
@@ -32,6 +40,10 @@ export const Title = styled.h3`
   margin-bottom: ${({ theme }) => theme.margins.s}px;
   font-size: ${({ theme }) => theme.fontSizes.l}px;
   font-weight: ${({ theme }) => theme.fontWeights.xxxl};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.xxl}px;
+  }
 `;
 
 export const Input = styled.input`
@@ -48,6 +60,11 @@ export const Input = styled.input`
   &::placeholder {
     color: ${(props) => props.theme.fontColor};
   }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    height: ${({ theme }) => theme.height.l}px;
+    font-size: ${({ theme }) => theme.fontSizes.l}px;
+  }
 `;
 
 export const TextLink = styled(Link)`
@@ -59,5 +76,20 @@ export const TextLink = styled(Link)`
   &:hover {
     text-decoration: underline;
     cursor: pointer;
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
+`;
+
+export const ErrorText = styled.p`
+  margin-bottom: ${({ theme }) => theme.margins.xs}px;
+  font-size: ${({ theme }) => theme.fontSizes.xxs}px;
+  color: ${({ theme }) => theme.colors.BLUE};
+  align-self: flex-start;
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
   }
 `;

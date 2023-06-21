@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from 'styled-components';
 
-import MyPhotoSvg from '@/assets/photo.svg';
-import { userSearchResultText } from '@/constants/config';
+import { userSearchResultText } from '@/constants/config/components';
+import { icons } from '@/constants/icons';
+import { commonTheme } from '@/styles/theme';
 
 import Button from '../Button';
 
@@ -12,8 +12,9 @@ import { UserSearchResultProps } from './types';
 
 const { photoAlt, buttonText } = userSearchResultText;
 
+const { MyPhotoSvg } = icons;
+
 const UserSearchResult: FC<UserSearchResultProps> = ({ name, email, photo, id }) => {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const onHandlerNavigate = () => {
@@ -29,11 +30,11 @@ const UserSearchResult: FC<UserSearchResultProps> = ({ name, email, photo, id })
       </User>
       <Button
         onClick={onHandlerNavigate}
-        width={theme?.width.m}
-        height={theme?.height.ss}
-        backgroundColor={theme?.colors.BLACK}
-        fontSize={theme?.fontSizes.xxxs}
-        color={theme?.colors.WHITE}
+        width={commonTheme.width.m}
+        height={commonTheme.height.ss}
+        backgroundColor={commonTheme.colors.BLACK}
+        fontSize={commonTheme.fontSizes.xxxs}
+        color={commonTheme.colors.WHITE}
       >
         {buttonText}
       </Button>

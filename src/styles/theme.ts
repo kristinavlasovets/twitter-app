@@ -2,9 +2,12 @@ import { Colors } from '@/constants/styles';
 
 import { ICommonTheme, ITheme } from './types';
 
-const commonTheme: ICommonTheme = {
+export const commonTheme: ICommonTheme = {
   dimensions: {
     mobile: 495,
+    tablet: 768,
+    laptop: 1024,
+    bigScreen: 1920,
   },
   fontFamilies: {
     roboto: "'Roboto', sans-serif",
@@ -118,7 +121,7 @@ const commonTheme: ICommonTheme = {
 };
 
 export const darkTheme: ITheme = {
-  bodyColor: Colors.DARK_GRAY,
+  bodyColor: Colors.BLACK,
   fontColor: Colors.WHITE,
   subtitleColor: Colors.WHITE,
   ...commonTheme,

@@ -6,7 +6,9 @@ export interface UserState {
   user: IUser;
   isAuth: boolean;
   isLoading: boolean;
-  isError: string | null;
+  isError: string;
 }
 
-export type UpdateUserPayload = Partial<IUser>;
+export type UpdateUserPayload = Pick<IUser, 'surname' | 'gender' | 'name' | 'telegram'>;
+
+export type SetUserThunkPayload = Pick<IUser, 'email' | 'password'>;

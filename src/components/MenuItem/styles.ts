@@ -9,10 +9,15 @@ export const Wrapper = styled(Link)`
   justify-content: space-between;
   font-weight: ${({ theme }) => theme.fontWeights.m};
   font-size: ${({ theme }) => theme.fontSizes.xs}px;
-  color: ${({ theme }) => theme.colors.BLACK};
+  color: ${(props) => props.theme.fontColor};
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     margin-top: ${({ theme }) => theme.margins.xs}%;
+    height: fit-content;
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.l}px;
     height: fit-content;
   }
 `;
@@ -24,5 +29,10 @@ export const Icon = styled.img`
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    width: ${({ theme }) => theme.width.m}px;
+    height: ${({ theme }) => theme.height.m}px;
   }
 `;

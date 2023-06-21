@@ -44,6 +44,11 @@ export const Title = styled.h3`
   font-size: ${({ theme }) => theme.fontSizes.s}px;
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    margin-bottom: ${({ theme }) => theme.margins.m}px;
+    font-size: ${({ theme }) => theme.fontSizes.l}px;
+  }
 `;
 
 export const Input = styled.input`
@@ -60,6 +65,13 @@ export const Input = styled.input`
   &::placeholder {
     color: ${(props) => props.theme.fontColor};
   }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    margin-bottom: ${({ theme }) => theme.margins.m}px;
+    height: ${({ theme }) => theme.height.m}px;
+    padding: ${({ theme }) => theme.paddings.s}px;
+    font-size: ${({ theme }) => theme.fontSizes.l}px;
+  }
 `;
 
 export const Icon = styled.img`
@@ -72,6 +84,11 @@ export const Icon = styled.img`
   &:hover {
     transform: scale(1.2);
   }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    width: ${({ theme }) => theme.width.m}px;
+    height: ${({ theme }) => theme.height.m}px;
+  }
 `;
 
 export const Credentials = styled.p`
@@ -81,6 +98,10 @@ export const Credentials = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.s};
   color: ${(props) => props.theme.subtitleColor};
   align-self: flex-start;
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const ErrorText = styled.p`
@@ -88,4 +109,8 @@ export const ErrorText = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   color: ${({ theme }) => theme.colors.BLUE};
   align-self: flex-start;
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;

@@ -1,5 +1,24 @@
 import styled from 'styled-components';
 
+import { MenuWrapperProps } from './types';
+
+export const Wrapper = styled.div<MenuWrapperProps>`
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+
+  @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
+    padding: ${({ theme }) => theme.paddings.xs}px;
+    width: ${({ theme }) => theme.width.xl}%;
+    display: ${({ isBurgerMenuVisible }) => (isBurgerMenuVisible ? 'flex' : 'none')};
+  }
+
+  @media (max-width: ${({ theme }) => theme.dimensions.tablet}px) {
+    padding: ${({ theme }) => theme.paddings.xs}px;
+    display: ${({ isBurgerMenuVisible }) => (isBurgerMenuVisible ? 'flex' : 'none')};
+  }
+`;
+
 export const MenuWrapper = styled.div`
   margin-top: ${({ theme }) => theme.margins.xs}%;
   margin-left: ${({ theme }) => theme.margins.sss}%;
@@ -15,6 +34,10 @@ export const MenuWrapper = styled.div`
     padding: ${({ theme }) => theme.paddings.xs}px;
     width: ${({ theme }) => theme.width.xl}%;
   }
+
+  @media (max-width: ${({ theme }) => theme.dimensions.laptop}px) {
+    margin-left: ${({ theme }) => theme.margins.xs}px;
+  }
 `;
 
 export const UserInfo = styled.div`
@@ -29,7 +52,10 @@ export const UserInfo = styled.div`
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     margin-top: ${({ theme }) => theme.margins.xs}%;
-    height: fit-content;
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.laptop}px) {
+    width: fit-content;
   }
 `;
 
@@ -48,6 +74,10 @@ export const Name = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.l};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
   color: ${(props) => props.theme.fontColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const Email = styled.p`
@@ -56,6 +86,10 @@ export const Email = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
   color: ${(props) => props.theme.subtitleColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const Icon = styled.img`
@@ -68,5 +102,10 @@ export const Icon = styled.img`
 
   &:hover {
     transform: scale(1.2);
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    width: ${({ theme }) => theme.width.m}px;
+    height: ${({ theme }) => theme.height.m}px;
   }
 `;

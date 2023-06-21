@@ -1,10 +1,8 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useTheme } from 'styled-components';
 
 import { createDocument } from '@/api/firebase/createDocument';
 import { signUpWithEmail } from '@/api/firebase/signUpWithEmail';
-import MyLogoSvg from '@/assets/logo.svg';
 import Alert from '@/components/Alert';
 import { AppRoutes } from '@/components/AppRouter/types';
 import Button from '@/components/Button';
@@ -13,12 +11,14 @@ import {
   FirebaseCollections,
   Gender,
   monthNames,
-  signUpPageText,
   validationErrors,
   validationPatterns,
 } from '@/constants/config';
+import { signUpPageText } from '@/constants/config/pages';
+import { icons } from '@/constants/icons';
 import { Colors } from '@/constants/styles';
 import { useActions } from '@/hooks/useActions';
+import { commonTheme } from '@/styles/theme';
 import { getDays, getYears } from '@/utils/helpers/dateSelector';
 
 import {
@@ -46,9 +46,6 @@ const {
   phonePlaceholder,
   passwordPlaceholder,
   infoText,
-  textType,
-  emailType,
-  passwordType,
   linkText,
   buttonText,
   minLengthValue,
@@ -59,8 +56,11 @@ const { namePattern, phonePattern } = validationPatterns;
 
 const { nameError, phoneError, emailError, passwordError } = validationErrors;
 
+const { MyLogoSvg } = icons;
+
 const SignUpPage: FC = () => {
-  const theme = useTheme();
+  const [month, setMonth] = useState<number>(0);
+  const [year, setYear] = useState<number>(0);
   const { setUser, setIsAlertVisible } = useActions();
   const {
     register,
@@ -68,6 +68,15 @@ const SignUpPage: FC = () => {
     reset,
     formState: { isValid, errors },
   } = useForm<SignUpFormInputProps>({ mode: 'onChange' });
+
+  const onHandlerSetMonth = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const monthIndex = monthNames.indexOf(event.target.value as string);
+    setMonth(monthIndex);
+  };
+
+  const onHandlerSetYear = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setYear(Number(event.target.value as string));
+  };
 
   const onHandlerSubmit: SubmitHandler<SignUpFormInputProps> = async ({
     name,
@@ -82,12 +91,14 @@ const SignUpPage: FC = () => {
       const user = await signUpWithEmail(email, password);
       if (user) {
         const token = await user.getIdToken();
+        const nameLowercase = name.toLowerCase();
 
         const { defaultSurname, defaultPhoto, defaultTelegram } = defaultValueUserSignUp;
 
         const newUser = {
           id: user?.uid,
           name,
+          nameLowercase,
           phone,
           surname: user?.displayName || defaultSurname,
           photo: user?.photoURL || defaultPhoto,
@@ -138,14 +149,14 @@ const SignUpPage: FC = () => {
       <Input
         data-cy="nameField"
         placeholder={namePlaceholder}
-        type={textType}
+        type="text"
         {...register('name', { required: true, maxLength: maxLengthValue, pattern: namePattern })}
       />
       {errors.name && <ErrorText data-cy="nameError">{nameError}</ErrorText>}
       <Input
         data-cy="phoneField"
         placeholder={phonePlaceholder}
-        type={textType}
+        type="text"
         {...register('phone', {
           required: true,
           maxLength: maxLengthValue,
@@ -156,7 +167,7 @@ const SignUpPage: FC = () => {
       <Input
         data-cy="emailField"
         placeholder={emailPlaceholder}
-        type={emailType}
+        type="email"
         {...register('email', {
           required: true,
         })}
@@ -165,7 +176,7 @@ const SignUpPage: FC = () => {
       <Input
         data-cy="passwordField"
         placeholder={passwordPlaceholder}
-        type={passwordType}
+        type="password"
         {...register('password', {
           required: true,
           minLength: minLengthValue,
@@ -177,7 +188,7 @@ const SignUpPage: FC = () => {
       <Subtitle>{subTitle}</Subtitle>
       <Text>{infoText}</Text>
       <Selectors>
-        <MonthSelector {...register('month')}>
+        <MonthSelector {...register('month')} onChange={onHandlerSetMonth}>
           {monthNames.map((item) => (
             <option key={item} value={item}>
               {item}
@@ -185,13 +196,13 @@ const SignUpPage: FC = () => {
           ))}
         </MonthSelector>
         <DayYearSelector {...register('day')}>
-          {getDays().map((item) => (
+          {getDays(year, month).map((item) => (
             <option key={item} value={item}>
               {item}
             </option>
           ))}
         </DayYearSelector>
-        <DayYearSelector {...register('year')}>
+        <DayYearSelector {...register('year')} onChange={onHandlerSetYear}>
           {getYears().map((item) => (
             <option key={item} value={item}>
               {item}
@@ -203,7 +214,7 @@ const SignUpPage: FC = () => {
         type="submit"
         backgroundColor={Colors.DARK_BLUE}
         color={Colors.WHITE}
-        fontSize={theme?.fontSizes.xs}
+        fontSize={commonTheme.fontSizes.xs}
       >
         {buttonText}
       </Button>

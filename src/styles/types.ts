@@ -3,6 +3,9 @@ import { Colors } from '@/constants/styles';
 export interface ICommonTheme {
   dimensions: {
     mobile: number;
+    tablet: number;
+    laptop: number;
+    bigScreen: number;
   };
   fontFamilies: {
     roboto: string;

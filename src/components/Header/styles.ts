@@ -12,6 +12,10 @@ export const HeaderWrapper = styled.header`
   background-color: ${(props) => props.theme.bodyColor};
   border-bottom: ${({ theme }) => theme.borders.s}px solid
     ${({ theme }) => theme.colors.BORDER_GRAY};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    height: ${({ theme }) => theme.height.xl}px;
+  }
 `;
 
 export const Icon = styled.img`
@@ -21,6 +25,11 @@ export const Icon = styled.img`
 
   &:hover {
     transform: scale(1.2);
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    width: ${({ theme }) => theme.width.sss}px;
+    height: ${({ theme }) => theme.height.ss}px;
   }
 `;
 
@@ -43,6 +52,10 @@ export const Title = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
   color: ${(props) => props.theme.fontColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.l}px;
+  }
 `;
 
 export const Counter = styled.p`
@@ -50,6 +63,10 @@ export const Counter = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
   color: ${(props) => props.theme.subtitleColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const ToggleSwitch = styled.input`

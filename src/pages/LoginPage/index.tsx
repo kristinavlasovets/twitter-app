@@ -1,89 +1,94 @@
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useTheme } from 'styled-components';
 
-import { getDocument } from '@/api/firebase/getDocument';
-import { signInWithEmail } from '@/api/firebase/signInWithEmail';
-import MyLogoSvg from '@/assets/logo.svg';
 import Alert from '@/components/Alert';
 import { AppRoutes } from '@/components/AppRouter/types';
 import Button from '@/components/Button';
-import { FirebaseCollections, loginPageText } from '@/constants/config';
+import Loader from '@/components/Loader';
+import { validationErrors } from '@/constants/config';
+import { loginPageText } from '@/constants/config/pages';
+import { icons } from '@/constants/icons';
 import { Colors } from '@/constants/styles';
 import { useActions } from '@/hooks/useActions';
-import { IUser } from '@/types';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { commonTheme } from '@/styles/theme';
 
-import { Icon, Input, TextLink, Title, Wrapper } from './styles';
+import { ErrorText, Icon, Input, TextLink, Title, Wrapper } from './styles';
 import { LoginFormInputProps } from './types';
+
+const { emailError, passwordError } = validationErrors;
 
 const {
   title,
+  maxLengthValue,
+  minLengthValue,
   twitterLogoAlt,
   emailPlaceholder,
-  emailType,
   passwordPlaceholder,
-  passwordType,
   buttonText,
   linkText,
 } = loginPageText;
 
+const { MyLogoSvg } = icons;
 const LoginPage: FC = () => {
-  const theme = useTheme();
-  const { setUser, setIsAlertVisible } = useActions();
+  const { setUserThunk, setIsAlertVisible } = useActions();
+  const { isLoading, isError } = useAppSelector((state) => state.user);
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { isValid, errors },
+    formState: { errors },
   } = useForm<LoginFormInputProps>({ mode: 'onChange' });
 
   const onHandlerLogin: SubmitHandler<LoginFormInputProps> = async ({ email, password }) => {
     try {
-      const user = await signInWithEmail(email, password);
-
-      if (isValid) {
-        reset();
-      }
-      const existedUser = (await getDocument(FirebaseCollections.USERS, user!.uid)) as
-        | IUser
-        | false;
-
-      if (existedUser) {
-        setUser(existedUser);
-      }
+      setUserThunk({ email, password });
     } catch (e) {
       setIsAlertVisible({
         isVisible: true,
-        message: errors.email?.message || errors.password?.message || (e as Error).message,
+        message:
+          isError || errors.email?.message || errors.password?.message || (e as Error).message,
       });
     }
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <Wrapper onSubmit={handleSubmit(onHandlerLogin)}>
       <Icon src={MyLogoSvg} alt={twitterLogoAlt} />
       <Title>{title}</Title>
+      {isError && <ErrorText>{isError}</ErrorText>}
       <Input
         data-cy="emailField"
         placeholder={emailPlaceholder}
-        type={emailType}
-        {...register('email')}
+        type="email"
+        {...register('email', {
+          required: true,
+        })}
       />
+      {errors.email && <ErrorText data-cy="emailError">{emailError}</ErrorText>}
       <Input
         data-cy="passwordField"
         placeholder={passwordPlaceholder}
-        type={passwordType}
-        {...register('password')}
+        type="password"
+        {...register('password', {
+          required: true,
+          minLength: minLengthValue,
+          maxLength: maxLengthValue,
+        })}
       />
+      {errors.password && <ErrorText data-cy="passwordError">{passwordError}</ErrorText>}
+
       <Button
         type="submit"
         backgroundColor={Colors.DARK_BLUE}
         color={Colors.WHITE}
-        fontSize={theme?.fontSizes.xxs}
-        fontFamily={theme?.fontFamilies.roboto}
+        fontSize={commonTheme.fontSizes.xxs}
+        fontFamily={commonTheme.fontFamilies.roboto}
       >
         {buttonText}
       </Button>
+
       <TextLink to={AppRoutes.HOME}>{linkText}</TextLink>
       <Alert />
     </Wrapper>
