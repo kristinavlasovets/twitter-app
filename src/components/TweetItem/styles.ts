@@ -117,6 +117,10 @@ export const Name = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
   color: ${(props) => props.theme.fontColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const Credentials = styled.p`
@@ -125,6 +129,10 @@ export const Credentials = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
   color: ${(props) => props.theme.subtitleColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.s}px;
+  }
 `;
 
 export const TweetText = styled.p`
@@ -139,6 +147,10 @@ export const TweetText = styled.p`
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     margin-bottom: ${({ theme }) => theme.margins.xs}px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
   }
 `;
 

@@ -1,6 +1,7 @@
 export interface IUser {
   id: string;
   name: string;
+  nameLowercase: string;
   phone: string;
   surname: string;
   password: string;
@@ -23,4 +24,15 @@ export interface ITweet {
   likes: string[];
 }
 
-export type UpdateUserPayload = Partial<IUser>;
+export interface INewTweet {
+  name: string;
+  email: string;
+  id: string;
+  photo: string;
+  tweetValue: string;
+  image?: File;
+}
+
+export type ITweetBySearch = Pick<ITweet, 'text' | 'id'>;
+
+export type UpdateUserProps = Pick<IUser, 'gender' | 'name' | 'password' | 'surname' | 'telegram'>;

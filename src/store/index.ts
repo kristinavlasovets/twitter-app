@@ -21,6 +21,7 @@ const persistConfig = getPersistConfig({
   key: 'root',
   storage,
   rootReducer,
+  blacklist: ['user.isError'],
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

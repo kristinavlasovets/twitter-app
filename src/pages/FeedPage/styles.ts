@@ -12,6 +12,13 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
+  @media (max-width: ${({ theme }) => theme.dimensions.tablet}px) {
+    width: ${({ theme }) => theme.width.xl}%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const MainWrapper = styled.header`
@@ -25,6 +32,11 @@ export const MainWrapper = styled.header`
   border: ${({ theme }) => theme.borders.s}px solid ${({ theme }) => theme.colors.BORDER_GRAY};
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
+    padding: ${({ theme }) => theme.paddings.xs}px;
+    width: ${({ theme }) => theme.width.xl}%;
+  }
+
+  @media (max-width: ${({ theme }) => theme.dimensions.tablet}px) {
     padding: ${({ theme }) => theme.paddings.xs}px;
     width: ${({ theme }) => theme.width.xl}%;
   }

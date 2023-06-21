@@ -13,9 +13,10 @@ const Alert: FC = () => {
   const visibilityAlertTime = 5000;
 
   useEffect(() => {
-    if (isVisible) {
-      setTimeout(() => setIsAlertVisible(deafaultAlertValue), visibilityAlertTime);
-    }
+    if (!isVisible) return;
+    const timer = setTimeout(() => setIsAlertVisible(deafaultAlertValue), visibilityAlertTime);
+
+    return () => clearTimeout(timer);
   }, [isVisible]);
 
   if (!isVisible) {

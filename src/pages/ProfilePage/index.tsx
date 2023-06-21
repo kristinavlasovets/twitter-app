@@ -13,7 +13,8 @@ import SideSearch from '@/components/SideSearch';
 import TweetItem from '@/components/TweetItem';
 import TweetSearchResult from '@/components/TweetSearchResult';
 import UserBanner from '@/components/UserBanner';
-import { FirebaseCollections, profilePageText, tweetField } from '@/constants/config';
+import { FirebaseCollections, tweetField } from '@/constants/config';
+import { profilePageText } from '@/constants/config/pages';
 import { ITweet, IUser } from '@/types';
 
 import { Banner, MainWrapper, Title, Wrapper } from './styles';

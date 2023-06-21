@@ -1,11 +1,18 @@
-export const getDays = () => {
-  const days = new Array(31).fill(0).map((_, i) => `${i + 1}`);
+const oneMonth = 1;
+
+const startDay = 0;
+
+export const getDays = (year: number, month: number) => {
+  const totalDaysInMonth = new Date(year, month + oneMonth, startDay).getDate();
+
+  const days = Array.from({ length: totalDaysInMonth }, (_, i) => i + 1);
   return days;
 };
 
 export const getYears = () => {
-  const years = new Array(new Date().getFullYear() - 1923)
-    .fill(0)
-    .map((_, i) => `${new Date().getFullYear() - i}`);
+  const years = Array.from(
+    { length: new Date().getFullYear() - 1923 },
+    (_, i) => `${new Date().getFullYear() - i - 1}`
+  );
   return years;
 };

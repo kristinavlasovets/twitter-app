@@ -4,14 +4,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { getTweetsById } from '@/api/firebase/getTweetsById';
 import { updateDocument } from '@/api/firebase/updateDocument';
 import { updateUser } from '@/api/firebase/updateUser';
-import MyCloseSvg from '@/assets/close.svg';
 import {
   FirebaseCollections,
   tweetField,
-  userEditModalText,
   validationErrors,
   validationPatterns,
 } from '@/constants/config';
+import { userEditModalText } from '@/constants/config/components';
+import { icons } from '@/constants/icons';
 import { Colors } from '@/constants/styles';
 import { useActions } from '@/hooks/useActions';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -38,12 +38,13 @@ const {
 const { namePattern } = validationPatterns;
 const { nameError, surnameError, passwordError } = validationErrors;
 
+const { MyCloseSvg } = icons;
+
 const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisible }) => {
   const { updateUser: updateUserAction, setIsAlertVisible } = useActions();
   const {
     gender: currGender,
     name: currName,
-    password: currPassword,
     surname: currSurname,
     telegram: currTelegram,
     id,
@@ -63,10 +64,13 @@ const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisib
     telegram,
   }) => {
     try {
+      if (telegram && !telegram.includes('@')) {
+        telegram = `@${telegram}`;
+      }
       await updateUser({
         gender: gender || currGender,
         name: name || currName,
-        password: password || currPassword,
+        password,
         surname: surname || currSurname,
         telegram: telegram || currTelegram,
       });
@@ -74,7 +78,6 @@ const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisib
       updateUserAction({
         gender: gender || currGender,
         name: name || currName,
-        password: password || currPassword,
         surname: surname || currSurname,
         telegram: telegram || currTelegram,
       });
@@ -93,7 +96,7 @@ const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisib
     } catch (e) {
       setIsAlertVisible({
         isVisible: true,
-        message: errors.password!.message!,
+        message: 'Error',
       });
     }
   };
@@ -138,7 +141,7 @@ const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisib
         <Input data-cy="genderField" placeholder={currGender} type="text" {...register('gender')} />
         <Credentials>{passwordText}</Credentials>
         <Input
-          placeholder={currPassword}
+          placeholder="type new password"
           type="password"
           {...register('password', { minLength: minLengthValue, maxLength: maxLengthValue })}
         />

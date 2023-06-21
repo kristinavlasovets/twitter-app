@@ -1,9 +1,11 @@
-import { ChangeEvent, FC, FormEvent, useMemo, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import MySearchSvg from '@/assets/search.svg';
-import { sideSearchText } from '@/constants/config';
+import { sideSearchText } from '@/constants/config/components';
+import { icons } from '@/constants/icons';
 import { useActions } from '@/hooks/useActions';
+import { ICreator, ITweetBySearch } from '@/types';
+import { checkIsFeedPath } from '@/utils/helpers/checkIsFeedPath';
 
 import Alert from '../Alert';
 
@@ -25,28 +27,19 @@ import { SideSearchProps } from './types';
 
 const { title, link, searchIconAlt, navLinks, copyrightText } = sideSearchText;
 
+const { MySearchSvg } = icons;
+
 const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, errorMessage }) => {
-  const location = useLocation();
-  const isFeedPath = location.pathname === '/feed';
+  const { pathname } = useLocation();
+  const isFeedPath = checkIsFeedPath(pathname);
   const { setIsAlertVisible } = useActions();
   const [searchValue, setSearchValue] = useState<string>('');
 
-  const zeroLength = 0;
+  const [users, setUsers] = useState<ICreator[]>([]);
+  const [tweets, setTweets] = useState<ITweetBySearch[]>([]);
 
-  const [users, setUsers] = useState<{ id: string; name: string; email: string; photo: string }[]>(
-    []
-  );
-  const [tweets, setTweets] = useState<{ text: string; id: string }[]>([]);
-
-  const usersResult = useMemo(
-    () => users.map((data) => <Result {...data} key={data.id} />),
-    [users]
-  );
-
-  const tweetsResult = useMemo(
-    () => tweets.map((data) => <Result {...data} key={data.id} />),
-    [tweets]
-  );
+  const usersResult = users.map((data) => <Result {...data} key={data.id} />);
+  const tweetsResult = tweets.map((data) => <Result {...data} key={data.id} />);
 
   const onHandlerChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -74,14 +67,14 @@ const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, er
       setTweets(newTweets);
     }
 
-    if (newUsers.length === zeroLength) {
+    if (newUsers.length === 0) {
       setIsAlertVisible({
         isVisible: true,
         message: errorMessage,
       });
     }
 
-    if (newTweets.length === zeroLength) {
+    if (newTweets.length === 0) {
       setIsAlertVisible({
         isVisible: true,
         message: errorMessage,
@@ -97,7 +90,7 @@ const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, er
           <Input placeholder={placeholder} value={searchValue} onChange={onHandlerChange} />
         </Button>
       </SearchWrapper>
-      {(users.length !== zeroLength || tweets.length !== zeroLength) && (
+      {(users.length !== 0 || tweets.length !== 0) && (
         <ResultWrapper>
           <Title>{title}</Title>
           <ResultList>{isFeedPath ? usersResult : tweetsResult}</ResultList>

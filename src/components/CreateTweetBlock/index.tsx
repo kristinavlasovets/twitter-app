@@ -1,16 +1,12 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { useTheme } from 'styled-components';
-import { v4 } from 'uuid';
 
-import { createDocument } from '@/api/firebase/createDocument';
-import { uploadFile } from '@/api/firebase/uploadFile';
-import MyCloseSvg from '@/assets/close.svg';
-import MyImageSvg from '@/assets/image-blue.svg';
-import MyPhotoSvg from '@/assets/photo.svg';
-import { createTweetBlockText, FirebaseCollections } from '@/constants/config';
+import { createTweetBlockText } from '@/constants/config/components';
+import { icons } from '@/constants/icons';
 import { Colors } from '@/constants/styles';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { userSelector } from '@/store/slices/userSlice/selectors';
+import { commonTheme } from '@/styles/theme';
+import { createNewTweet } from '@/utils/helpers/createNewTweet';
 
 import Button from '../Button';
 
@@ -18,6 +14,7 @@ import {
   FileWrapper,
   Icon,
   ImageIcon,
+  PreloadImage,
   TextArea,
   TextAreaWrapper,
   Tweet,
@@ -27,8 +24,10 @@ import {
 } from './styles';
 import { CreateTweetBlockProps } from './types';
 
-const { buttonText, photoAlt, textAreaPlaceholder, fileType, imageAlt, cancelAlt } =
+const { buttonText, photoAlt, textAreaPlaceholder, imageAlt, cancelAlt, preloadAlt } =
   createTweetBlockText;
+
+const { MyImageSvg, MyPhotoSvg, MyCloseSvg } = icons;
 
 const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
   setTweets,
@@ -39,9 +38,6 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
   const { name, email, id, photo } = useAppSelector(userSelector);
   const [tweetValue, setTweetValue] = useState<string>('');
   const [image, setImage] = useState<File>();
-  const theme = useTheme();
-
-  const zeroIndex = 0;
 
   if (!isModalVisible && isModal) {
     return null;
@@ -50,36 +46,13 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
   const onHandlerCreateTweet = async (e: FormEvent) => {
     e.preventDefault();
     if (tweetValue) {
-      const tweet = {
-        tweetId: v4(),
-        creator: { name, email, id, photo },
-        text: tweetValue,
-        date: Date.now(),
-        image: '',
-        likes: [],
-      };
-
-      await createDocument({
-        collection: FirebaseCollections.TWEETS,
-        id: tweet.tweetId,
-        document: tweet,
-      });
-
-      if (image) {
-        await uploadFile({
-          collection: FirebaseCollections.TWEETS,
-          id: tweet.tweetId,
-          file: image,
-        });
-
-        const url = URL.createObjectURL(image);
-
-        tweet.image = url;
-      }
+      const tweet = await createNewTweet({ email, id, image, name, photo, tweetValue });
 
       setTweets((prev) => [tweet, ...prev]);
     }
     setTweetValue('');
+    setImage(undefined);
+    setIsModalVisible!(false);
   };
 
   const onHandlerChangeInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -90,7 +63,7 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files) {
-      setImage(files[zeroIndex]);
+      setImage(files[0]);
     }
   };
 
@@ -108,11 +81,14 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
             value={tweetValue}
             onChange={onHandlerChangeInput}
           />
+          {image && isModalVisible !== true && (
+            <PreloadImage src={URL.createObjectURL(image)} alt={preloadAlt} />
+          )}
           <FileWrapper>
-            <UploadFileLabel htmlFor={fileType}>
+            <UploadFileLabel htmlFor="file">
               <UploadFile
-                type={fileType}
-                id={fileType}
+                type="file"
+                id="file"
                 hidden
                 accept="image/*"
                 onChange={handleFileChange}
@@ -125,12 +101,12 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
         <Button
           data-testid="createTweetButton"
           type="submit"
-          width={theme?.width.xs}
+          width={commonTheme.width.xs}
           backgroundColor={Colors.DARK_BLUE}
           color={Colors.WHITE}
-          fontSize={theme?.fontSizes.xxs}
+          fontSize={commonTheme.fontSizes.xxs}
           disabled={tweetValue === ''}
-          opacity={theme?.opacities.s}
+          opacity={commonTheme.opacities.s}
         >
           {buttonText}
         </Button>

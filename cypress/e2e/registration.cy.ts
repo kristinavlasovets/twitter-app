@@ -11,9 +11,9 @@ describe('registration check', () => {
   it('should navigate to signup page and register and authorize user', () => {
     cy.visit('http://localhost:5173/');
     cy.get('[data-cy="signUpLink"]').click();
-    cy.get('[data-cy="nameField"]').type('Terry');
+    cy.get('[data-cy="nameField"]').type('Carrie');
     cy.get('[data-cy="phoneField"]').type('+31636363634');
-    cy.get('[data-cy="emailField"]').type('terry@gmail.com');
+    cy.get('[data-cy="emailField"]').type('carrie@gmail.com');
     cy.get('[data-cy="passwordField"]').type('111111');
     cy.get('[data-cy="logInButton"]').click();
   });

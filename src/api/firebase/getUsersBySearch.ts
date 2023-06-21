@@ -7,9 +7,9 @@ import { IUser } from '@/types';
 export const getUsersBySearch = async (searchValue: string) => {
   const q = query(
     collection(db, FirebaseCollections.USERS),
-    orderBy('name', 'asc'),
-    where('name', '>=', searchValue),
-    where('name', '<=', `${searchValue}\uf8ff`)
+    orderBy('nameLowercase', 'asc'),
+    where('nameLowercase', '>=', searchValue.toLowerCase()),
+    where('nameLowercase', '<=', `${searchValue.toLowerCase()}\uf8ff`)
   );
 
   const querySnapshot = await getDocs(q);

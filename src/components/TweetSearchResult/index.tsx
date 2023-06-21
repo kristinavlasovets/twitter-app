@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from 'styled-components';
 
-import { tweetSearchResultText } from '@/constants/config';
+import { tweetSearchResultText } from '@/constants/config/components';
+import { commonTheme } from '@/styles/theme';
 
 import Button from '../Button';
 
@@ -12,7 +12,6 @@ import { TweetSearchResultProps } from './types';
 const { buttonText } = tweetSearchResultText;
 
 const TweetSearchResult: FC<TweetSearchResultProps> = ({ id, text }) => {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const onHandlerNavigate = () => {
@@ -26,11 +25,11 @@ const TweetSearchResult: FC<TweetSearchResultProps> = ({ id, text }) => {
       </User>
       <Button
         onClick={onHandlerNavigate}
-        width={theme?.width.ss}
-        height={theme?.height.ss}
-        backgroundColor={theme?.colors.RED}
-        fontSize={theme?.fontSizes.xxs}
-        color={theme?.colors.WHITE}
+        width={commonTheme.width.ss}
+        height={commonTheme.height.ss}
+        backgroundColor={commonTheme.colors.RED}
+        fontSize={commonTheme.fontSizes.xxs}
+        color={commonTheme.colors.WHITE}
       >
         {buttonText}
       </Button>

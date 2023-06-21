@@ -93,6 +93,10 @@ export const TextArea = styled.textarea`
     color: ${(props) => props.theme.subtitleColor};
     opacity: ${({ theme }) => theme.opacities.m};
   }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const ErrorText = styled.p`
@@ -113,4 +117,11 @@ export const UploadFileLabel = styled.label`
   background-color: transparent;
   justify-content: start;
   cursor: pointer;
+`;
+
+export const PreloadImage = styled.img`
+  margin-bottom: ${({ theme }) => theme.margins.ss}px;
+  width: ${({ theme }) => theme.width.sss}%;
+  height: fit-content;
+  border-radius: ${({ theme }) => theme.borderRadiuses.l}px;
 `;

@@ -1,12 +1,13 @@
 import { FC } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import MyArrowBackSvg from '@/assets/arrow-back.svg';
-import { headerText } from '@/constants/config';
+import { headerText } from '@/constants/config/components';
+import { icons } from '@/constants/icons';
 import { ThemeMode } from '@/constants/styles';
 import { useActions } from '@/hooks/useActions';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { isAuthSelector, themeSelector, userSelector } from '@/store/slices/userSlice/selectors';
+import { checkIsFeedPath } from '@/utils/helpers/checkIsFeedPath';
 
 import {
   Counter,
@@ -19,54 +20,63 @@ import {
 } from './styles';
 import { HeaderProps } from './types';
 
-const { title, text, inputType, backAlt } = headerText;
+const { title, text, backAlt } = headerText;
+
+const { MyArrowBackSvg, MyWhiteArrowBackSvg } = icons;
 
 const Header: FC<HeaderProps> = ({ tweetsCount }) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const params = useParams();
   const currentTheme = useAppSelector(themeSelector);
   const isAuth = useAppSelector(isAuthSelector);
   const { name, id } = useAppSelector(userSelector);
   const { changeTheme } = useActions();
   const onHandlerToggleTheme = (theme: ThemeMode) => () => changeTheme(theme);
-  const isFeedPath = location.pathname === '/feed';
-  const isProfilePath = location.pathname.includes(`/profile/${id}`);
-  const { pathname } = useLocation();
-  const pathNameIndex = 2;
-  const pathId = pathname.split('/')[pathNameIndex];
+  const isFeedPath = checkIsFeedPath(pathname);
+  const isProfilePath = pathname.includes(`/profile/${id}`);
+  const pathId = params.id;
 
   const onHandlerNavigate = () => {
-    navigate(location.pathname === '/feed/:id' ? `/profile/${id}` : '/feed');
+    navigate(pathname === '/feed/:id' ? `/profile/${id}` : '/feed');
   };
 
-  return isAuth ? (
-    <HeaderWrapper data-cy="header">
-      {(isProfilePath && pathId === ':id') || isProfilePath ? (
-        <HeaderNav>
-          <Title>{isFeedPath ? title : name}</Title>
-          {!isFeedPath && (
-            <Counter>
-              {tweetsCount}
-              {text}
-            </Counter>
+  return (
+    <>
+      {isAuth && (
+        <HeaderWrapper data-cy="header">
+          {(isProfilePath && pathId === ':id') || isProfilePath ? (
+            <HeaderNav>
+              <Title>{isFeedPath ? title : name}</Title>
+              {!isFeedPath && (
+                <Counter>
+                  {tweetsCount}
+                  {text}
+                </Counter>
+              )}
+            </HeaderNav>
+          ) : (
+            <HeaderHomeNav>
+              <Icon
+                src={currentTheme === 'dark' ? MyWhiteArrowBackSvg : MyArrowBackSvg}
+                alt={backAlt}
+                onClick={onHandlerNavigate}
+              />
+              <Title>{title}</Title>
+            </HeaderHomeNav>
           )}
-        </HeaderNav>
-      ) : (
-        <HeaderHomeNav>
-          <Icon src={MyArrowBackSvg} alt={backAlt} onClick={onHandlerNavigate} />
-          <Title>{title}</Title>
-        </HeaderHomeNav>
+          <ToggleSwitch
+            data-cy="toggleTheme"
+            type="checkbox"
+            checked={currentTheme === ThemeMode.LIGHT}
+            onChange={onHandlerToggleTheme(
+              currentTheme === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK
+            )}
+          />
+        </HeaderWrapper>
       )}
-      <ToggleSwitch
-        data-cy="toggleTheme"
-        type={inputType}
-        checked={currentTheme === ThemeMode.LIGHT}
-        onChange={onHandlerToggleTheme(
-          currentTheme === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK
-        )}
-      />
-    </HeaderWrapper>
-  ) : null;
+    </>
+  );
 };
 
 export default Header;

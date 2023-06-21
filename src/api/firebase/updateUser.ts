@@ -2,7 +2,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 
 import { FirebaseCollections } from '@/constants/config';
 import { auth, db } from '@/lib/firebase';
-import { UpdateUserPayload } from '@/types';
+import { UpdateUserProps } from '@/types';
 
 import { updateDocument } from './updateDocument';
 import { updateUserPassword } from './updateUserPassword';
@@ -13,26 +13,16 @@ export const updateUser = async ({
   password,
   surname,
   telegram,
-}: UpdateUserPayload) => {
+}: UpdateUserProps) => {
   const user = auth.currentUser!;
   const { uid } = user!;
+  const udpatedNameLowercase = name.toLowerCase();
 
-  const updatedInfo: UpdateUserPayload = {};
-
-  if (name) {
-    updatedInfo.name = name;
-  }
-  if (surname) {
-    updatedInfo.surname = surname;
+  if (!telegram.includes('@')) {
+    telegram = `@${telegram}`;
   }
 
-  if (telegram) {
-    updatedInfo.telegram = telegram;
-  }
-
-  if (gender) {
-    updatedInfo.gender = gender;
-  }
+  const updatedInfo = { gender, name, nameLowercase: udpatedNameLowercase, surname, telegram };
 
   await updateDoc(doc(db, FirebaseCollections.USERS, uid), updatedInfo);
 

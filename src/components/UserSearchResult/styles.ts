@@ -39,6 +39,10 @@ export const UserName = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.l};
   color: ${({ theme }) => theme.colors.BLACK};
   background: transparent;
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const UserEmail = styled.p`

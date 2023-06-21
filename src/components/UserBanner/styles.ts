@@ -53,6 +53,10 @@ export const Name = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
   color: ${(props) => props.theme.fontColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const Credentials = styled.p`
@@ -61,6 +65,10 @@ export const Credentials = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
   color: ${(props) => props.theme.subtitleColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const Text = styled.p`
@@ -69,6 +77,15 @@ export const Text = styled.p`
   margin-bottom: ${({ theme }) => theme.margins.xs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+    height: fit-content;
+  }
 `;
 
 export const TextLink = styled(Link)`
@@ -80,6 +97,15 @@ export const TextLink = styled(Link)`
     text-decoration: underline;
     cursor: pointer;
   }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+    height: fit-content;
+  }
 `;
 
 export const Statistics = styled.div`
@@ -90,6 +116,10 @@ export const Statistics = styled.div`
   display: flex;
   justify-content: flex-start;
   background-color: transparent;
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+  }
 `;
 
 export const Count = styled.p`
@@ -98,6 +128,11 @@ export const Count = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
   color: ${(props) => props.theme.fontColor};
+
+  @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
+    font-size: ${({ theme }) => theme.fontSizes.m}px;
+    height: fit-content;
+  }
 `;
 
 export const Button = styled.button`

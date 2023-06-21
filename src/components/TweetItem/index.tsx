@@ -3,15 +3,12 @@ import { useLocation } from 'react-router-dom';
 
 import { deleteDocument } from '@/api/firebase/deleteDocument';
 import { setLikeOnTweet } from '@/api/firebase/setLikeOnTweet';
-import MyCloseSvg from '@/assets/close.svg';
-import MyDeleteSvg from '@/assets/delete.svg';
-import MyEditSvg from '@/assets/edit.svg';
-import MyLikeSvg from '@/assets/like.svg';
-import MyRedLikeSvg from '@/assets/like-fill.svg';
-import MyPhotoSvg from '@/assets/photo.svg';
-import { FirebaseCollections, tweetItemText } from '@/constants/config';
+import { FirebaseCollections } from '@/constants/config';
+import { tweetItemText } from '@/constants/config/components';
+import { icons } from '@/constants/icons';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { userIdSelector } from '@/store/slices/userSlice/selectors';
+import { themeSelector, userIdSelector } from '@/store/slices/userSlice/selectors';
+import { checkIsFeedPath } from '@/utils/helpers/checkIsFeedPath';
 import { getTweetCreatedTime } from '@/utils/helpers/getTweetCreatedTime';
 
 import {
@@ -34,6 +31,17 @@ import { TweetItemProps } from './types';
 
 const { photoAlt, editAlt, deleteAlt, cancelAlt, likeAlt } = tweetItemText;
 
+const {
+  MyCloseSvg,
+  MyDeleteSvg,
+  MyEditSvg,
+  MyWhiteEditSvg,
+  MyLikeSvg,
+  MyWhiteLikeSvg,
+  MyPhotoSvg,
+  MyRedLikeSvg,
+} = icons;
+
 const TweetItem: FC<TweetItemProps> = ({
   creatorId,
   username,
@@ -48,8 +56,9 @@ const TweetItem: FC<TweetItemProps> = ({
   onHandlerGetTweets,
 }) => {
   const [isRemoveVisible, setIsRemoveVisible] = useState(false);
-  const location = useLocation();
-  const isFeedPath = location.pathname === '/feed';
+  const { pathname } = useLocation();
+  const currentTheme = useAppSelector(themeSelector);
+  const isFeedPath = checkIsFeedPath(pathname);
   const userId = useAppSelector(userIdSelector);
   const isLiked = likes.includes(userId);
   const monthStart = 4;
@@ -86,7 +95,11 @@ const TweetItem: FC<TweetItemProps> = ({
             <Credentials>{isFeedPath ? tweetCreatedTime : formattedDate}</Credentials>
             {creatorId === userId && (
               <>
-                <EditIcon src={MyEditSvg} alt={editAlt} onClick={onHandlerShowRemove} />
+                <EditIcon
+                  src={currentTheme === 'dark' ? MyWhiteEditSvg : MyEditSvg}
+                  alt={editAlt}
+                  onClick={onHandlerShowRemove}
+                />
                 {isRemoveVisible && (
                   <IconWrapper>
                     <ImageIcon src={MyDeleteSvg} alt={deleteAlt} onClick={onHandlerDeleteTweet} />
@@ -104,7 +117,9 @@ const TweetItem: FC<TweetItemProps> = ({
           )}
           <Info>
             <ImageIcon
-              src={isLiked ? MyRedLikeSvg : MyLikeSvg}
+              src={
+                isLiked ? MyRedLikeSvg : (currentTheme === 'dark' && MyWhiteLikeSvg) || MyLikeSvg
+              }
               alt={likeAlt}
               onClick={onHandlerLikeTweet}
             />
