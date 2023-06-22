@@ -73,7 +73,6 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
         });
 
         const url = URL.createObjectURL(image);
-
         tweet.image = url;
       }
 
@@ -121,7 +120,6 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
             </UploadFileLabel>
           </FileWrapper>
         </TextAreaWrapper>
-
         <Button
           data-testid="createTweetButton"
           type="submit"
