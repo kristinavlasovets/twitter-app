@@ -85,7 +85,7 @@ const TweetItem: FC<TweetItemProps> = ({
     setIsRemoveVisible(false);
   };
   return (
-    <Wrapper>
+    <Wrapper data-cy="tweetItemWrapper">
       <Icon src={photo || MyPhotoSvg} alt={photoAlt} />
       <Tweet>
         <TweetContentWrapper>
@@ -96,14 +96,25 @@ const TweetItem: FC<TweetItemProps> = ({
             {creatorId === userId && (
               <>
                 <EditIcon
+                  data-cy="editIcon"
                   src={currentTheme === 'dark' ? MyWhiteEditSvg : MyEditSvg}
                   alt={editAlt}
                   onClick={onHandlerShowRemove}
                 />
                 {isRemoveVisible && (
                   <IconWrapper>
-                    <ImageIcon src={MyDeleteSvg} alt={deleteAlt} onClick={onHandlerDeleteTweet} />
-                    <ImageIcon src={MyCloseSvg} alt={cancelAlt} onClick={onHandlerClose} />
+                    <ImageIcon
+                      data-cy="deleteIcon"
+                      src={MyDeleteSvg}
+                      alt={deleteAlt}
+                      onClick={onHandlerDeleteTweet}
+                    />
+                    <ImageIcon
+                      data-cy="closeIcon"
+                      src={MyCloseSvg}
+                      alt={cancelAlt}
+                      onClick={onHandlerClose}
+                    />
                   </IconWrapper>
                 )}
               </>
@@ -117,6 +128,7 @@ const TweetItem: FC<TweetItemProps> = ({
           )}
           <Info>
             <ImageIcon
+              data-cy="likeIcon"
               src={
                 isLiked ? MyRedLikeSvg : (currentTheme === 'dark' && MyWhiteLikeSvg) || MyLikeSvg
               }

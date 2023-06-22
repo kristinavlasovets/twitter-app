@@ -72,11 +72,12 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
   };
 
   return (
-    <Wrapper isModal={isModal}>
+    <Wrapper isModal={isModal} data-cy="createTweetWrapper">
       <Icon src={photo || MyPhotoSvg} alt={photoAlt} />
       <Tweet onSubmit={onHandlerCreateTweet}>
         <TextAreaWrapper>
           <TextArea
+            data-cy="textArea"
             placeholder={textAreaPlaceholder}
             value={tweetValue}
             onChange={onHandlerChangeInput}
@@ -91,7 +92,7 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
                 accept="image/*"
                 onChange={handleFileChange}
               />
-              <ImageIcon src={MyImageSvg} alt={imageAlt} />
+              <ImageIcon src={MyImageSvg} alt={imageAlt} data-cy="uploadImage" />
             </UploadFileLabel>
           </FileWrapper>
         </TextAreaWrapper>

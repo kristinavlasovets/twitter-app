@@ -41,14 +41,16 @@ const UserBanner: FC<UserBannerProps> = memo(({ photo, name, email, gender, tele
   };
 
   return (
-    <Wrapper>
+    <Wrapper data-cy="userBannerWrapper">
       <UserInfo>
         <Icon src={photo || MyPhotoSvg} alt={twitterAlt} />
-        <Name>{id === authUserId ? authUserName : name}</Name>
+        <Name data-cy="userBannerName">{id === authUserId ? authUserName : name}</Name>
         <Credentials>{id === authUserId ? authUserEmail : email}</Credentials>
-        <Text>
+        <Text data-cy="userBannerGender">
           {id === authUserId ? authUserGender : gender}
-          <TextLink to="#">{id === authUserId ? authUserTelegram : telegram}</TextLink>
+          <TextLink data-cy="userBannerTelegram" to="#">
+            {id === authUserId ? authUserTelegram : telegram}
+          </TextLink>
         </Text>
         <Statistics>
           <Count>{followingCount}</Count>

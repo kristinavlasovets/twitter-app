@@ -57,7 +57,7 @@ const LoginPage: FC = () => {
     <Wrapper onSubmit={handleSubmit(onHandlerLogin)}>
       <Icon src={MyLogoSvg} alt={twitterLogoAlt} />
       <Title>{title}</Title>
-      {isError && <ErrorText>{isError}</ErrorText>}
+      {isError && <ErrorText data-cy="loginErrorText">{isError}</ErrorText>}
       <Input
         data-cy="emailField"
         placeholder={emailPlaceholder}

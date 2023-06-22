@@ -1,2 +1,4 @@
 node_modules/
 dist/
+setupTests.js
+fileTransformer.js

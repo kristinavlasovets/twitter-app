@@ -110,7 +110,7 @@ const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisib
 
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit(onHandlerSubmit)}>
+      <Form data-cy="formWrapper" onSubmit={handleSubmit(onHandlerSubmit)}>
         <Icon src={MyCloseSvg} alt={cancelAlt} onClick={onHandlerClose} />
         <Title>{title}</Title>
         <Credentials>{nameText}</Credentials>
