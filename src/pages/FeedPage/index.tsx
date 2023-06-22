@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { getAllTweets } from '@/api/firebase/getAllTweets';
-import { getUsersBySearch } from '@/api/firebase/getUsersBySearch';
+import { getAllTweets, getUsersBySearch } from '@/api/firebase/getData';
 import Alert from '@/components/Alert';
 import CreateTweetBlock from '@/components/CreateTweetBlock';
 import Header from '@/components/Header';
@@ -19,9 +18,7 @@ const { sideTitle, userError, zeroLength, title } = feedPageText;
 
 const FeedPage: FC = () => {
   const [tweets, setTweets] = useState<ITweet[]>([]);
-  const { pathname } = useLocation();
-  const pathNameIndex = 2;
-  const pathId = pathname.split('/')[pathNameIndex];
+  const params = useParams();
 
   const onHandlerGetTweets = async () => {
     const result = await getAllTweets();
@@ -32,14 +29,14 @@ const FeedPage: FC = () => {
     onHandlerGetTweets();
   }, []);
 
-  const tweetBySearch = tweets.filter((item) => item.id === pathId) as ITweet[];
+  const tweetBySearch = tweets.filter((item) => item.id === params?.id) as ITweet[];
 
   return (
     <Wrapper>
       <SideMenu setTweets={setTweets} />
       <MainWrapper>
         <Header />
-        {pathId === ':id' ? (
+        {!params?.id ? (
           <>
             <CreateTweetBlock setTweets={setTweets} />
             <Title>{title}</Title>

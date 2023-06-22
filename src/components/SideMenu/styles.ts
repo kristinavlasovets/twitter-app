@@ -24,7 +24,7 @@ export const MenuWrapper = styled.div`
   margin-left: ${({ theme }) => theme.margins.sss}%;
   width: ${({ theme }) => theme.width.xs}%;
   height: fit-content;
-  padding-left: ${({ theme }) => theme.paddings.m}px;
+  padding-left: ${({ theme }) => theme.paddings.xxs}px;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -33,6 +33,7 @@ export const MenuWrapper = styled.div`
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     padding: ${({ theme }) => theme.paddings.xs}px;
     width: ${({ theme }) => theme.width.xl}%;
+    align-self: center;
   }
 
   @media (max-width: ${({ theme }) => theme.dimensions.laptop}px) {

@@ -39,6 +39,10 @@ export const privateAppRoutes: IRoute[] = [
     Element: FeedPage,
   },
   {
+    path: AppRoutes.FEED_TWEET,
+    Element: FeedPage,
+  },
+  {
     path: AppRoutes.EXPLORE,
     Element: ExplorePage,
   },

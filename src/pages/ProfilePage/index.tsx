@@ -1,9 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { getDocument } from '@/api/firebase/getDocument';
-import { getTweetsById } from '@/api/firebase/getTweetsById';
-import { getTweetsBySearch } from '@/api/firebase/getTweetsBySearch';
+import { getDocument, getTweetsById, getTweetsBySearch } from '@/api/firebase/getData';
 import MyBanner from '@/assets/profile-banner.png';
 import Alert from '@/components/Alert';
 import CreateTweetBlock from '@/components/CreateTweetBlock';

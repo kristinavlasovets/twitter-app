@@ -81,14 +81,12 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
             value={tweetValue}
             onChange={onHandlerChangeInput}
           />
-          {image && isModalVisible !== true && (
-            <PreloadImage src={URL.createObjectURL(image)} alt={preloadAlt} />
-          )}
+          {image && <PreloadImage src={URL.createObjectURL(image)} alt={preloadAlt} />}
           <FileWrapper>
-            <UploadFileLabel htmlFor="file">
+            <UploadFileLabel htmlFor={isModal ? 'fileModal' : 'file'}>
               <UploadFile
                 type="file"
-                id="file"
+                id={isModal ? 'fileModal' : 'file'}
                 hidden
                 accept="image/*"
                 onChange={handleFileChange}

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { userSearchResultText } from '@/constants/config/components';
@@ -14,7 +14,7 @@ const { photoAlt, buttonText } = userSearchResultText;
 
 const { MyPhotoSvg } = icons;
 
-const UserSearchResult: FC<UserSearchResultProps> = ({ name, email, photo, id }) => {
+const UserSearchResult: FC<UserSearchResultProps> = memo(({ name, email, photo, id }) => {
   const navigate = useNavigate();
 
   const onHandlerNavigate = () => {
@@ -40,6 +40,6 @@ const UserSearchResult: FC<UserSearchResultProps> = ({ name, email, photo, id })
       </Button>
     </Wrapper>
   );
-};
+});
 
 export default UserSearchResult;

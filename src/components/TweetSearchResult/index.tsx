@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { tweetSearchResultText } from '@/constants/config/components';
@@ -11,7 +11,7 @@ import { TweetSearchResultProps } from './types';
 
 const { buttonText } = tweetSearchResultText;
 
-const TweetSearchResult: FC<TweetSearchResultProps> = ({ id, text }) => {
+const TweetSearchResult: FC<TweetSearchResultProps> = memo(({ id, text }) => {
   const navigate = useNavigate();
 
   const onHandlerNavigate = () => {
@@ -35,6 +35,6 @@ const TweetSearchResult: FC<TweetSearchResultProps> = ({ id, text }) => {
       </Button>
     </Wrapper>
   );
-};
+});
 
 export default TweetSearchResult;

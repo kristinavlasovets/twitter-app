@@ -4,7 +4,7 @@ import { WrapperProps } from './types';
 
 export const Wrapper = styled.header<WrapperProps>`
   position: ${({ isModal }) => (isModal ? 'fixed' : 'relative')};
-  top: ${({ theme, isModal }) => (isModal ? theme.top.xs : '')}%;
+  top: ${({ theme, isModal }) => (isModal ? theme.top.xxs : '')}%;
   left: ${({ theme, isModal }) => (isModal ? theme.left.s : '')}%;
   margin: ${({ theme }) => theme.margins.xxs} auto;
   width: ${({ theme, isModal }) => (isModal ? theme.width.sss : theme.width.xl)}%;
@@ -121,7 +121,7 @@ export const UploadFileLabel = styled.label`
 
 export const PreloadImage = styled.img`
   margin-bottom: ${({ theme }) => theme.margins.ss}px;
-  width: ${({ theme }) => theme.width.sss}%;
+  width: ${({ theme }) => theme.width.s}%;
   height: fit-content;
   border-radius: ${({ theme }) => theme.borderRadiuses.l}px;
 `;

@@ -1,11 +1,28 @@
-import { doc, updateDoc } from 'firebase/firestore';
+import { updatePassword } from 'firebase/auth';
+import { doc, DocumentData, updateDoc, WithFieldValue } from 'firebase/firestore';
 
 import { FirebaseCollections } from '@/constants/config';
 import { auth, db } from '@/lib/firebase';
 import { UpdateUserProps } from '@/types';
 
-import { updateDocument } from './updateDocument';
-import { updateUserPassword } from './updateUserPassword';
+interface UpdateDocumentProps {
+  collection: string;
+  id: string;
+  newDoc: WithFieldValue<DocumentData>;
+}
+
+export const updateDocument = async (options: UpdateDocumentProps) => {
+  const { collection, newDoc, id } = options;
+  const docRef = doc(db, collection, id);
+  await updateDoc(docRef, newDoc);
+};
+
+export const updateUserPassword = async (password: string) => {
+  const user = auth.currentUser;
+  if (user && password) {
+    await updatePassword(user, password);
+  }
+};
 
 export const updateUser = async ({
   gender,

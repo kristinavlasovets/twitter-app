@@ -3,7 +3,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { FirebaseCollections } from '@/constants/config';
 import { storage } from '@/lib/firebase';
 
-import { updateDocument } from './updateDocument';
+import { updateDocument } from './updateData';
 
 type TFile = Blob | Uint8Array | ArrayBuffer;
 

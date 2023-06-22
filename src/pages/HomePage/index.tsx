@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { createDocument } from '@/api/firebase/createDocument';
-import { getDocument } from '@/api/firebase/getDocument';
+import { getDocument } from '@/api/firebase/getData';
 import Alert from '@/components/Alert';
 import { AppRoutes } from '@/components/AppRouter/types';
 import { defaultValueUserSignUp, FirebaseCollections, Gender } from '@/constants/config';

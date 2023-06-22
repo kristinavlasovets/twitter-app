@@ -3,7 +3,7 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import { FirebaseCollections, tweetField } from '@/constants/config';
 import { db } from '@/lib/firebase';
 
-import { getTweetsById } from './getTweetsById';
+import { getTweetsById } from './getData';
 
 export const setLikeOnTweet = async (tweetId: string, userId: string) => {
   const tweet = await getTweetsById(tweetField.tweetId, tweetId);

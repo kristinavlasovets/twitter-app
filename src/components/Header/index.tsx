@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { headerText } from '@/constants/config/components';
@@ -24,7 +24,7 @@ const { title, text, backAlt } = headerText;
 
 const { MyArrowBackSvg, MyWhiteArrowBackSvg } = icons;
 
-const Header: FC<HeaderProps> = ({ tweetsCount }) => {
+const Header: FC<HeaderProps> = memo(({ tweetsCount }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const params = useParams();
@@ -77,6 +77,6 @@ const Header: FC<HeaderProps> = ({ tweetsCount }) => {
       )}
     </>
   );
-};
+});
 
 export default Header;

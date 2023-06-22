@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 
 import { userBannerText } from '@/constants/config/components';
 import { icons } from '@/constants/icons';
@@ -26,7 +26,7 @@ const { buttonText, twitterAlt, followersText, followingText, followersCount, fo
   userBannerText;
 
 const { MyPhotoSvg } = icons;
-const UserBanner: FC<UserBannerProps> = ({ photo, name, email, gender, telegram, id }) => {
+const UserBanner: FC<UserBannerProps> = memo(({ photo, name, email, gender, telegram, id }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const {
     id: authUserId,
@@ -67,6 +67,6 @@ const UserBanner: FC<UserBannerProps> = ({ photo, name, email, gender, telegram,
       )}
     </Wrapper>
   );
-};
+});
 
 export default UserBanner;

@@ -8,6 +8,7 @@ import { ICreator, ITweetBySearch } from '@/types';
 import { checkIsFeedPath } from '@/utils/helpers/checkIsFeedPath';
 
 import Alert from '../Alert';
+import Loader from '../Loader';
 
 import {
   Button,
@@ -30,6 +31,7 @@ const { title, link, searchIconAlt, navLinks, copyrightText } = sideSearchText;
 const { MySearchSvg } = icons;
 
 const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, errorMessage }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { pathname } = useLocation();
   const isFeedPath = checkIsFeedPath(pathname);
   const { setIsAlertVisible } = useActions();
@@ -46,45 +48,52 @@ const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, er
     setSearchValue(value);
   };
 
-  const onHandlerSearchUsers = async (e: FormEvent) => {
+  const onHandlerSearchData = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!searchValue && isFeedPath) {
-      setUsers([]);
-      return;
-    }
-    if (!searchValue && !isFeedPath) {
-      setTweets([]);
-      return;
-    }
-    const newUsers = await getData(searchValue);
-    if (isFeedPath) {
-      setUsers(newUsers);
-    }
+    try {
+      setIsLoading(true);
+      if (!searchValue && isFeedPath) {
+        setUsers([]);
+        return;
+      }
+      if (!searchValue && !isFeedPath) {
+        setTweets([]);
+        return;
+      }
+      const newUsers = await getData(searchValue);
+      if (isFeedPath) {
+        setUsers(newUsers);
+      }
 
-    const newTweets = await getData(searchValue);
-    if (!isFeedPath) {
-      setTweets(newTweets);
-    }
+      const newTweets = await getData(searchValue);
+      if (!isFeedPath) {
+        setTweets(newTweets);
+      }
 
-    if (newUsers.length === 0) {
-      setIsAlertVisible({
-        isVisible: true,
-        message: errorMessage,
-      });
-    }
+      if (newUsers.length === 0) {
+        setIsAlertVisible({
+          isVisible: true,
+          message: errorMessage,
+        });
+      }
 
-    if (newTweets.length === 0) {
-      setIsAlertVisible({
-        isVisible: true,
-        message: errorMessage,
-      });
+      if (newTweets.length === 0) {
+        setIsAlertVisible({
+          isVisible: true,
+          message: errorMessage,
+        });
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  if (isLoading) return <Loader />;
+
   return (
     <Wrapper>
-      <SearchWrapper onSubmit={onHandlerSearchUsers}>
+      <SearchWrapper onSubmit={onHandlerSearchData}>
         <Button type="submit">
           <Icon src={MySearchSvg} alt={searchIconAlt} />
           <Input placeholder={placeholder} value={searchValue} onChange={onHandlerChange} />

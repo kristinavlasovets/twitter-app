@@ -1,9 +1,8 @@
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { getTweetsById } from '@/api/firebase/getTweetsById';
-import { updateDocument } from '@/api/firebase/updateDocument';
-import { updateUser } from '@/api/firebase/updateUser';
+import { getTweetsById } from '@/api/firebase/getData';
+import { updateDocument, updateUser } from '@/api/firebase/updateData';
 import {
   FirebaseCollections,
   tweetField,

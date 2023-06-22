@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { Icon, Wrapper } from './styles';
 import { MenuItemProps } from './types';
 
-const MenuItem: FC<MenuItemProps> = ({ path, src, alt, text, id }) => {
+const MenuItem: FC<MenuItemProps> = memo(({ path, src, alt, text, id }) => {
   if (text === ' Profile') {
     return (
       <Wrapper to={`/profile/${id}`}>
@@ -18,6 +18,6 @@ const MenuItem: FC<MenuItemProps> = ({ path, src, alt, text, id }) => {
       {text}
     </Wrapper>
   );
-};
+});
 
 export default MenuItem;

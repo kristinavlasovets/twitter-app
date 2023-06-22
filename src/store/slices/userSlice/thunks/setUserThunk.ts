@@ -1,4 +1,4 @@
-import { getDocument } from '@/api/firebase/getDocument';
+import { getDocument } from '@/api/firebase/getData';
 import { signInWithEmail } from '@/api/firebase/signInWithEmail';
 import { FirebaseCollections } from '@/constants/config';
 import { IUser } from '@/types';
