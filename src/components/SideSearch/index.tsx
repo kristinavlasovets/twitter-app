@@ -44,6 +44,7 @@ const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, er
   const tweetsResult = tweets.map((data) => <Result {...data} key={data.id} />);
 
   const onHandlerChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsLoading(false);
     const { value } = e.target;
     setSearchValue(value);
   };
@@ -89,22 +90,24 @@ const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, er
     }
   };
 
-  if (isLoading) return <Loader />;
-
   return (
     <Wrapper>
       <SearchWrapper onSubmit={onHandlerSearchData}>
         <Button type="submit">
           <Icon src={MySearchSvg} alt={searchIconAlt} />
-          <Input placeholder={placeholder} value={searchValue} onChange={onHandlerChange} />
         </Button>
+        <Input placeholder={placeholder} value={searchValue} onChange={onHandlerChange} />
       </SearchWrapper>
-      {(users.length !== 0 || tweets.length !== 0) && (
-        <ResultWrapper>
-          <Title>{title}</Title>
-          <ResultList>{isFeedPath ? usersResult : tweetsResult}</ResultList>
-          <TextLink to="#">{link}</TextLink>
-        </ResultWrapper>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        (users.length !== 0 || tweets.length !== 0) && (
+          <ResultWrapper>
+            <Title>{title}</Title>
+            <ResultList>{isFeedPath ? usersResult : tweetsResult}</ResultList>
+            <TextLink to="#">{link}</TextLink>
+          </ResultWrapper>
+        )
       )}
       <Nav>
         {navLinks.map(({ name, to }) => (
