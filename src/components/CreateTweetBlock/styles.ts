@@ -1,6 +1,11 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { WrapperProps } from './types';
+
+const fade = keyframes` 
+0% {opacity: 0}
+100% { opacity: 1}
+`;
 
 export const Wrapper = styled.header<WrapperProps>`
   position: ${({ isModal }) => (isModal ? 'fixed' : 'relative')};
@@ -23,6 +28,11 @@ export const Wrapper = styled.header<WrapperProps>`
     ${(props) => props.theme.fontColor};
 
   z-index: ${({ theme }) => theme.zIndexes.m};
+
+  animation-duration: 0.5s;
+  animation-name: ${fade};
+  animation-delay: 0.5s;
+  animation-fill-mode: backwards;
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     top: ${({ theme, isModal }) => (isModal ? theme.top.xs : '')}%;

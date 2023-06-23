@@ -3,7 +3,7 @@ export const getTweetCreatedTime = (date: number) => {
   const totalHours = ((Date.now() / 1000 - date / 1000) / 3600).toFixed(0);
 
   let tweetCreatedTime;
-  if (totalMinutes > '60') {
+  if (Number(totalMinutes) > 60) {
     tweetCreatedTime = `· ${totalHours}h`;
   } else {
     tweetCreatedTime = `· ${totalMinutes}min`;
