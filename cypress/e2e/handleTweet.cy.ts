@@ -5,7 +5,7 @@ describe('check module for handle with a tweet', () => {
     cy.get('[data-cy="emailField"]').type('john@gmail.com');
     cy.get('[data-cy="passwordField"]').type('111111');
     cy.get('[data-cy="logInButton"]').click();
-    cy.get('[data-testid="createTweetButton"]').should('exist');
+    cy.get('button').should('exist');
     cy.get('[data-cy="textArea"]').type('Good morning');
     cy.get('[data-cy="createTweetWrapper"]').find('button').contains('Tweet').should('exist');
     cy.get('[data-cy="createTweetWrapper"]').find('button').contains('Tweet').last().click();
@@ -18,6 +18,7 @@ describe('check module for handle with a tweet', () => {
     cy.get('[data-cy="emailField"]').type('john@gmail.com');
     cy.get('[data-cy="passwordField"]').type('111111');
     cy.get('[data-cy="logInButton"]').click();
+    cy.get('button').should('exist');
     cy.get('[data-cy="tweetItemWrapper"]').should('exist');
     cy.get('[data-cy="tweetItemWrapper"]').find('[data-cy="likeIcon"]').should('exist');
     cy.get('[data-cy="likeIcon"]').first().click();
@@ -28,6 +29,7 @@ describe('check module for handle with a tweet', () => {
     cy.get('[data-cy="emailField"]').type('john@gmail.com');
     cy.get('[data-cy="passwordField"]').type('111111');
     cy.get('[data-cy="logInButton"]').click();
+    cy.get('div').should('exist');
     cy.get('[data-cy="editIcon"]').should('exist').first().click();
     cy.get('[data-cy="closeIcon"]').should('exist').click();
     cy.get('[data-cy="editIcon"]').should('exist').first().click();

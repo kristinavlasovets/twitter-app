@@ -1,6 +1,6 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 
-import { FirebaseCollections, tweetField } from '@/constants/config';
+import { FirebaseCollections, tweetField } from '@/constants';
 import { db } from '@/lib/firebase';
 
 import { getTweetsById } from './getData';

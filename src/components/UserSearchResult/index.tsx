@@ -1,8 +1,7 @@
 import { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { userSearchResultText } from '@/constants/config/components';
-import { icons } from '@/constants/icons';
+import { icons, userSearchResultText } from '@/constants';
 import { commonTheme } from '@/styles/theme';
 
 import Button from '../Button';
@@ -14,7 +13,8 @@ const { photoAlt, buttonText } = userSearchResultText;
 
 const { MyPhotoSvg } = icons;
 
-const UserSearchResult: FC<UserSearchResultProps> = memo(({ name, email, photo, id }) => {
+const UserSearchResult: FC<UserSearchResultProps> = memo((props) => {
+  const { name, email, photo, id } = props;
   const navigate = useNavigate();
 
   const onHandlerNavigate = () => {

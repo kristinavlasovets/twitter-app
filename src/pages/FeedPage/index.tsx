@@ -9,7 +9,7 @@ import SideMenu from '@/components/SideMenu';
 import SideSearch from '@/components/SideSearch';
 import TweetItem from '@/components/TweetItem';
 import UserSearchResult from '@/components/UserSearchResult';
-import { feedPageText } from '@/constants/config/pages';
+import { feedPageText } from '@/constants';
 import { ITweet } from '@/types';
 
 import { MainWrapper, Title, Wrapper } from './styles';

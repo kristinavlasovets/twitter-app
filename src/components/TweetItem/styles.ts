@@ -1,11 +1,6 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 import { LikeCountProps } from './types';
-
-const fade = keyframes` 
-0% {opacity: 0}
-100% { opacity: 1}
-`;
 
 export const Wrapper = styled.header`
   position: relative;
@@ -37,11 +32,6 @@ export const Tweet = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   background-color: ${(props) => props.theme.bodyColor};
-
-  animation-duration: 0.5s;
-  animation-name: ${fade};
-  animation-delay: 0.5s;
-  animation-fill-mode: backwards;
 `;
 
 export const TweetContentWrapper = styled.div`

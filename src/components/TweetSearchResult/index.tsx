@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { tweetSearchResultText } from '@/constants/config/components';
+import { tweetSearchResultText } from '@/constants';
 import { commonTheme } from '@/styles/theme';
 
 import Button from '../Button';
@@ -11,9 +11,9 @@ import { TweetSearchResultProps } from './types';
 
 const { buttonText } = tweetSearchResultText;
 
-const TweetSearchResult: FC<TweetSearchResultProps> = memo(({ id, text }) => {
+const TweetSearchResult: FC<TweetSearchResultProps> = memo((props) => {
+  const { id, text } = props;
   const navigate = useNavigate();
-
   const onHandlerNavigate = () => {
     navigate(`/feed/${id}`);
   };

@@ -1,7 +1,6 @@
 import { FC, memo, useState } from 'react';
 
-import { userBannerText } from '@/constants/config/components';
-import { icons } from '@/constants/icons';
+import { icons, userBannerText } from '@/constants';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { userSelector } from '@/store/slices/userSlice/selectors';
 import { createNewPortal } from '@/utils/helpers/createNewPortal';
@@ -26,7 +25,9 @@ const { buttonText, twitterAlt, followersText, followingText, followersCount, fo
   userBannerText;
 
 const { MyPhotoSvg } = icons;
-const UserBanner: FC<UserBannerProps> = memo(({ photo, name, email, gender, telegram, id }) => {
+
+const UserBanner: FC<UserBannerProps> = memo((props) => {
+  const { photo, name, email, gender, telegram, id } = props;
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const {
     id: authUserId,

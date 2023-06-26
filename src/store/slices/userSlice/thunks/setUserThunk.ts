@@ -1,6 +1,6 @@
 import { getDocument } from '@/api/firebase/getData';
 import { signInWithEmail } from '@/api/firebase/signInWithEmail';
-import { FirebaseCollections } from '@/constants/config';
+import { FirebaseCollections } from '@/constants';
 import { IUser } from '@/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 

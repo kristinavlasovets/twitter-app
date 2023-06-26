@@ -1,8 +1,6 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
 
-import { createTweetBlockText } from '@/constants/config/components';
-import { icons } from '@/constants/icons';
-import { Colors } from '@/constants/styles';
+import { Colors, createTweetBlockText, icons } from '@/constants';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { userSelector } from '@/store/slices/userSlice/selectors';
 import { commonTheme } from '@/styles/theme';
@@ -29,12 +27,8 @@ const { buttonText, photoAlt, textAreaPlaceholder, imageAlt, cancelAlt, preloadA
 
 const { MyImageSvg, MyPhotoSvg, MyCloseSvg } = icons;
 
-const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
-  setTweets,
-  isModal,
-  isModalVisible,
-  setIsModalVisible,
-}) => {
+const CreateTweetBlock: FC<CreateTweetBlockProps> = (props) => {
+  const { setTweets, isModal, isModalVisible, setIsModalVisible } = props;
   const { name, email, id, photo } = useAppSelector(userSelector);
   const [tweetValue, setTweetValue] = useState<string>('');
   const [image, setImage] = useState<File>();
@@ -52,7 +46,7 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = ({
     }
     setTweetValue('');
     setImage(undefined);
-    setIsModalVisible!(false);
+    if (isModal) setIsModalVisible!(false);
   };
 
   const onHandlerChangeInput = (e: ChangeEvent<HTMLTextAreaElement>) => {

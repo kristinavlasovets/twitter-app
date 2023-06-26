@@ -1,4 +1,4 @@
-import { ThemeType } from '@/constants/styles';
+import { ThemeType } from '@/constants';
 import { IUser } from '@/types';
 
 export interface UserState {

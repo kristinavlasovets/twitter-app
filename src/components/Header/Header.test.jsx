@@ -1,13 +1,14 @@
 import 'jsdom-global/register';
 
 import { jest, test } from '@jest/globals';
-import { render } from 'enzyme';
+import { mount, render } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+import { store } from '../../store';
 import { darkTheme } from '../../styles/theme';
-import ReduxProvider from '../ReduxProvider';
 import Header from './index';
 
 jest.mock('redux-persist', () => {
@@ -18,14 +19,14 @@ jest.mock('redux-persist', () => {
   };
 });
 
-test('hello world', () => {
+test('Header component render', () => {
   const wrapper = render(
-    <ThemeProvider theme={darkTheme}>
-      <ReduxProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={darkTheme}>
         <BrowserRouter>
           <Header tweetsCount={3} />
         </BrowserRouter>
-      </ReduxProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   );
 });

@@ -16,6 +16,11 @@ export const Wrapper = styled(Link)`
     height: fit-content;
   }
 
+  @media (max-width: ${({ theme }) => theme.dimensions.tablet}px) {
+    margin-top: ${({ theme }) => theme.margins.xs}%;
+    height: fit-content;
+  }
+
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.l}px;
     height: fit-content;

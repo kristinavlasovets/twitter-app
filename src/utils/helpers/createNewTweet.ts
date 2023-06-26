@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 
 import { createDocument } from '@/api/firebase/createDocument';
 import { uploadFile } from '@/api/firebase/uploadFile';
-import { FirebaseCollections } from '@/constants/config';
+import { FirebaseCollections } from '@/constants';
 import { INewTweet } from '@/types';
 
 export const createNewTweet = async (options: INewTweet) => {

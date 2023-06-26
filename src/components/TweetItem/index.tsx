@@ -3,13 +3,13 @@ import { useLocation } from 'react-router-dom';
 
 import { deleteDocument } from '@/api/firebase/deleteDocument';
 import { setLikeOnTweet } from '@/api/firebase/setLikeOnTweet';
-import { FirebaseCollections } from '@/constants/config';
-import { tweetItemText } from '@/constants/config/components';
-import { icons } from '@/constants/icons';
+import { FirebaseCollections, icons, tweetItemText } from '@/constants';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { themeSelector, userIdSelector } from '@/store/slices/userSlice/selectors';
-import { checkIsFeedPath } from '@/utils/helpers/checkIsFeedPath';
+import { checkPath } from '@/utils/helpers/checkPath';
 import { getTweetCreatedTime } from '@/utils/helpers/getTweetCreatedTime';
+
+import { AppRoutes } from '../AppRouter/types';
 
 import {
   Credentials,
@@ -42,23 +42,24 @@ const {
   MyRedLikeSvg,
 } = icons;
 
-const TweetItem: FC<TweetItemProps> = ({
-  creatorId,
-  username,
-  email,
-  date,
-  text,
-  likes,
-  image,
-  photo,
-  tweetId,
-  setTweets,
-  onHandlerGetTweets,
-}) => {
+const TweetItem: FC<TweetItemProps> = (props) => {
+  const {
+    creatorId,
+    username,
+    email,
+    date,
+    text,
+    likes,
+    image,
+    photo,
+    tweetId,
+    setTweets,
+    onHandlerGetTweets,
+  } = props;
   const [isRemoveVisible, setIsRemoveVisible] = useState(false);
   const { pathname } = useLocation();
   const currentTheme = useAppSelector(themeSelector);
-  const isFeedPath = checkIsFeedPath(pathname);
+  const isFeedPath = checkPath(pathname, AppRoutes.FEED);
   const userId = useAppSelector(userIdSelector);
   const isLiked = likes.includes(userId);
   const monthStart = 4;

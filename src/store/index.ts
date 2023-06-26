@@ -1,4 +1,3 @@
-import { getPersistConfig } from 'redux-deep-persist';
 import {
   FLUSH,
   PAUSE,
@@ -17,12 +16,11 @@ import { allReducers } from './slices';
 
 const rootReducer = combineReducers(allReducers);
 
-const persistConfig = getPersistConfig({
+const persistConfig = {
   key: 'root',
   storage,
   rootReducer,
-  blacklist: ['user.isError'],
-});
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

@@ -5,9 +5,13 @@ import { createDocument } from '@/api/firebase/createDocument';
 import { getDocument } from '@/api/firebase/getData';
 import Alert from '@/components/Alert';
 import { AppRoutes } from '@/components/AppRouter/types';
-import { defaultValueUserSignUp, FirebaseCollections, Gender } from '@/constants/config';
-import { homePageText } from '@/constants/config/pages';
-import { icons } from '@/constants/icons';
+import {
+  defaultValueUserSignUp,
+  FirebaseCollections,
+  Gender,
+  homePageText,
+  icons,
+} from '@/constants';
 import { useActions } from '@/hooks/useActions';
 import { auth } from '@/lib/firebase';
 import { IUser } from '@/types';

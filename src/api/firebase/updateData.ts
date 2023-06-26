@@ -1,7 +1,7 @@
 import { updatePassword } from 'firebase/auth';
 import { doc, DocumentData, updateDoc, WithFieldValue } from 'firebase/firestore';
 
-import { FirebaseCollections } from '@/constants/config';
+import { FirebaseCollections } from '@/constants';
 import { auth, db } from '@/lib/firebase';
 import { UpdateUserProps } from '@/types';
 

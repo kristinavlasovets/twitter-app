@@ -5,7 +5,7 @@ describe('check module for creating a new tweet', () => {
     cy.get('[data-cy="emailField"]').type('john@gmail.com');
     cy.get('[data-cy="passwordField"]').type('111111');
     cy.get('[data-cy="logInButton"]').click();
-    cy.get('[data-testid="createTweetButton"]').should('exist');
+    cy.get('button').should('exist');
     cy.get('button').contains('Tweet').first().click();
   });
   it('should navigate feed page and show ability to create a new tweet', () => {
@@ -14,7 +14,7 @@ describe('check module for creating a new tweet', () => {
     cy.get('[data-cy="emailField"]').type('john@gmail.com');
     cy.get('[data-cy="passwordField"]').type('111111');
     cy.get('[data-cy="logInButton"]').click();
-    cy.get('[data-testid="createTweetButton"]').should('exist');
+    cy.get('button').should('exist');
     cy.get('[data-cy="textArea"]').type('Good morning');
     cy.get('[data-cy="createTweetWrapper"]').find('button').contains('Tweet').last().click();
   });

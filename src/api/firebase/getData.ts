@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 
-import { FirebaseCollections } from '@/constants/config';
+import { FirebaseCollections } from '@/constants';
 import { db } from '@/lib/firebase';
 import { ITweet, IUser } from '@/types';
 
@@ -35,7 +35,11 @@ export const getAllTweets = async () => {
 };
 
 export const getTweetsById = async (field: string, id: string) => {
-  const q = query(collection(db, FirebaseCollections.TWEETS), where(field, '==', id));
+  const q = query(
+    collection(db, FirebaseCollections.TWEETS),
+    orderBy('date', 'desc'),
+    where(field, '==', id)
+  );
 
   const querySnapshot = await getDocs(q);
 

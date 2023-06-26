@@ -1,13 +1,13 @@
 import { FC, memo } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { headerText } from '@/constants/config/components';
-import { icons } from '@/constants/icons';
-import { ThemeMode } from '@/constants/styles';
+import { headerText, icons, ThemeMode } from '@/constants';
 import { useActions } from '@/hooks/useActions';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { isAuthSelector, themeSelector, userSelector } from '@/store/slices/userSlice/selectors';
-import { checkIsFeedPath } from '@/utils/helpers/checkIsFeedPath';
+import { checkPath } from '@/utils/helpers/checkPath';
+
+import { AppRoutes } from '../AppRouter/types';
 
 import {
   Counter,
@@ -27,25 +27,23 @@ const { MyArrowBackSvg, MyWhiteArrowBackSvg } = icons;
 const Header: FC<HeaderProps> = memo(({ tweetsCount }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const params = useParams();
   const currentTheme = useAppSelector(themeSelector);
   const isAuth = useAppSelector(isAuthSelector);
   const { name, id } = useAppSelector(userSelector);
   const { changeTheme } = useActions();
   const onHandlerToggleTheme = (theme: ThemeMode) => () => changeTheme(theme);
-  const isFeedPath = checkIsFeedPath(pathname);
-  const isProfilePath = pathname.includes(`/profile/${id}`);
-  const pathId = params.id;
+  const isFeedPath = checkPath(pathname, AppRoutes.FEED);
+  const isProfilePath = checkPath(pathname, `/profile/${id}`);
 
   const onHandlerNavigate = () => {
-    navigate(pathname === '/feed/:id' ? `/profile/${id}` : '/feed');
+    navigate(isFeedPath ? `/profile/${id}` : AppRoutes.FEED);
   };
 
   return (
     <>
       {isAuth && (
         <HeaderWrapper data-cy="header">
-          {(isProfilePath && pathId === ':id') || isProfilePath ? (
+          {isProfilePath ? (
             <HeaderNav>
               <Title>{isFeedPath ? title : name}</Title>
               {!isFeedPath && (

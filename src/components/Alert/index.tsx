@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 
-import { deafaultAlertValue } from '@/constants/config';
+import { deafaultAlertValue } from '@/constants';
 import { useActions } from '@/hooks/useActions';
 import { useAppSelector } from '@/hooks/useAppSelector';
 

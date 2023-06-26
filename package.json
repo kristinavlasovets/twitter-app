@@ -5,6 +5,7 @@
   "type": "module",
   "jest": {
     "verbose": true,
+    "preset": "ts-jest",
     "testEnvironment": "node",
     "transform": {
       "^.+\\.js|jsx|ts|tsx$": [
@@ -21,14 +22,15 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js",
       "\\.(css|less)$": "<rootDir>/fileTransformer.js",
       "@/assets/(.*)": "<rootDir>/src/assets/$1",
-      "@/constants/(.*)": "<rootDir>/src/constants/$1",
+      "@/constants": "<rootDir>/src/constants",
       "@/hooks/(.*)": "<rootDir>/src/hooks/$1",
       "@/components/(.*)": "<rootDir>/src/components/$1",
       "@/store/(.*)": "<rootDir>/src/store/$1",
       "@/api/(.*)": "<rootDir>/src/api/$1",
       "@/types/(.*)": "<rootDir>/src/types/$1",
       "@/lib/(.*)": "<rootDir>/src/lib/$1",
-      "@/utils/(.*)": "<rootDir>/src/utils/$1"
+      "@/utils/(.*)": "<rootDir>/src/utils/$1",
+      "@/styles/(.*)": "<rootDir>/src/styles/$1"
     },
     "modulePaths": [
       "<rootDir>"
@@ -51,7 +53,6 @@
     "react-hook-form": "^7.44.3",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.12.1",
-    "redux-deep-persist": "^1.0.7",
     "redux-persist": "^6.0.0",
     "styled-components": "^6.0.0-rc.3",
     "uuid": "^9.0.0",
@@ -65,6 +66,7 @@
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
     "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",

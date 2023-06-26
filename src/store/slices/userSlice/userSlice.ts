@@ -1,4 +1,4 @@
-import { ThemeMode } from '@/constants/styles';
+import { ThemeMode } from '@/constants';
 import { IUser } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 

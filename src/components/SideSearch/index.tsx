@@ -1,13 +1,13 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { sideSearchText } from '@/constants/config/components';
-import { icons } from '@/constants/icons';
+import { icons, sideSearchText } from '@/constants';
 import { useActions } from '@/hooks/useActions';
 import { ICreator, ITweetBySearch } from '@/types';
-import { checkIsFeedPath } from '@/utils/helpers/checkIsFeedPath';
+import { checkPath } from '@/utils/helpers/checkPath';
 
 import Alert from '../Alert';
+import { AppRoutes } from '../AppRouter/types';
 import Loader from '../Loader';
 
 import {
@@ -24,16 +24,17 @@ import {
   Title,
   Wrapper,
 } from './styles';
-import { SideSearchProps } from './types';
+import { SetState, SideSearchProps } from './types';
 
 const { title, link, searchIconAlt, navLinks, copyrightText } = sideSearchText;
 
 const { MySearchSvg } = icons;
 
-const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, errorMessage }) => {
+const SideSearch: FC<SideSearchProps<any>> = (props) => {
+  const { placeholder, getData, Result, errorMessage } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { pathname } = useLocation();
-  const isFeedPath = checkIsFeedPath(pathname);
+  const isFeedPath = checkPath(pathname, AppRoutes.FEED);
   const { setIsAlertVisible } = useActions();
   const [searchValue, setSearchValue] = useState<string>('');
 
@@ -49,50 +50,35 @@ const SideSearch: FC<SideSearchProps<any>> = ({ placeholder, getData, Result, er
     setSearchValue(value);
   };
 
-  const onHandlerSearchData = async (e: FormEvent) => {
+  const onHandlerSearchData = async <T,>(stateSetter: SetState<T[]>) => {
+    setIsLoading(true);
+    if (searchValue) {
+      const newData = (await getData(searchValue)) as T[];
+
+      if (newData.length === 0) {
+        setIsAlertVisible({
+          isVisible: true,
+          message: errorMessage,
+        });
+      }
+
+      stateSetter(newData);
+    } else {
+      stateSetter([]);
+    }
+    setIsLoading(false);
+  };
+
+  const onHandlerSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    try {
-      setIsLoading(true);
-      if (!searchValue && isFeedPath) {
-        setUsers([]);
-        return;
-      }
-      if (!searchValue && !isFeedPath) {
-        setTweets([]);
-        return;
-      }
-      const newUsers = await getData(searchValue);
-      if (isFeedPath) {
-        setUsers(newUsers);
-      }
-
-      const newTweets = await getData(searchValue);
-      if (!isFeedPath) {
-        setTweets(newTweets);
-      }
-
-      if (newUsers.length === 0) {
-        setIsAlertVisible({
-          isVisible: true,
-          message: errorMessage,
-        });
-      }
-
-      if (newTweets.length === 0) {
-        setIsAlertVisible({
-          isVisible: true,
-          message: errorMessage,
-        });
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    if (isFeedPath) onHandlerSearchData(setUsers);
+    if (!isFeedPath) onHandlerSearchData(setTweets);
   };
 
   return (
     <Wrapper>
-      <SearchWrapper onSubmit={onHandlerSearchData}>
+      <SearchWrapper onSubmit={onHandlerSubmit}>
         <Button type="submit">
           <Icon src={MySearchSvg} alt={searchIconAlt} />
         </Button>

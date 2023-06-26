@@ -4,14 +4,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { getTweetsById } from '@/api/firebase/getData';
 import { updateDocument, updateUser } from '@/api/firebase/updateData';
 import {
+  Colors,
   FirebaseCollections,
+  icons,
   tweetField,
+  userEditModalText,
   validationErrors,
   validationPatterns,
-} from '@/constants/config';
-import { userEditModalText } from '@/constants/config/components';
-import { icons } from '@/constants/icons';
-import { Colors } from '@/constants/styles';
+} from '@/constants';
 import { useActions } from '@/hooks/useActions';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { userSelector } from '@/store/slices/userSlice/selectors';
@@ -39,7 +39,8 @@ const { nameError, surnameError, passwordError } = validationErrors;
 
 const { MyCloseSvg } = icons;
 
-const UserEditModal: FC<UserEditModalProps> = ({ isModalVisible, setIsModalVisible }) => {
+const UserEditModal: FC<UserEditModalProps> = (props) => {
+  const { isModalVisible, setIsModalVisible } = props;
   const { updateUser: updateUserAction, setIsAlertVisible } = useActions();
   const {
     gender: currGender,

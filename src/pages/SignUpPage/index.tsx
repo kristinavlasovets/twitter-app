@@ -7,16 +7,16 @@ import Alert from '@/components/Alert';
 import { AppRoutes } from '@/components/AppRouter/types';
 import Button from '@/components/Button';
 import {
+  Colors,
   defaultValueUserSignUp,
   FirebaseCollections,
   Gender,
+  icons,
   monthNames,
+  signUpPageText,
   validationErrors,
   validationPatterns,
-} from '@/constants/config';
-import { signUpPageText } from '@/constants/config/pages';
-import { icons } from '@/constants/icons';
-import { Colors } from '@/constants/styles';
+} from '@/constants';
 import { useActions } from '@/hooks/useActions';
 import { commonTheme } from '@/styles/theme';
 import { getDays, getYears } from '@/utils/helpers/dateSelector';

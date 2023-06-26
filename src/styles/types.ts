@@ -1,4 +1,4 @@
-import { Colors } from '@/constants/styles';
+import { Colors } from '@/constants';
 
 export interface ICommonTheme {
   dimensions: {
@@ -101,6 +101,7 @@ export interface ICommonTheme {
     m: number;
   };
   top: {
+    xxxs: number;
     xxs: number;
     xs: number;
     s: number;

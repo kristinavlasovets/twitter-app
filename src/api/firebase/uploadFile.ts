@@ -1,6 +1,6 @@
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
-import { FirebaseCollections } from '@/constants/config';
+import { FirebaseCollections } from '@/constants';
 import { storage } from '@/lib/firebase';
 
 import { updateDocument } from './updateData';

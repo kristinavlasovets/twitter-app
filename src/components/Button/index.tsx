@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Wrapper } from './styles';
 import { ButtonProps } from './types';
 
-const Button: FC<ButtonProps> = (options) => {
+const Button: FC<ButtonProps> = (props) => {
   const {
     height,
     width,
@@ -17,7 +17,7 @@ const Button: FC<ButtonProps> = (options) => {
     children,
     disabled,
     onClick,
-  } = options;
+  } = props;
   return (
     <Wrapper
       data-cy="logInButton"

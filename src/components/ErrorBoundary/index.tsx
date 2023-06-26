@@ -1,6 +1,6 @@
 import { Component, ErrorInfo } from 'react';
 
-import { ErrorBoundaryText } from '@/constants/config';
+import { ErrorBoundaryText } from '@/constants';
 
 import { ErrorMessage, Wrapper } from './styles';
 import { ErrorBoundaryProps, ErrorBoundaryState } from './types';

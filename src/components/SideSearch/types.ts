@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 
 export interface SideSearchProps<T> {
   placeholder: string;
@@ -6,3 +6,5 @@ export interface SideSearchProps<T> {
   Result: FC<T>;
   errorMessage: string;
 }
+
+export type SetState<TState> = Dispatch<SetStateAction<TState>>;
