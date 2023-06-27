@@ -5,15 +5,14 @@ import { ButtonProps } from './types';
 
 const Button: FC<ButtonProps> = (props) => {
   const {
-    height,
-    width,
     backgroundColor,
     color,
-    fontFamily,
-    opacity,
     fontSize,
+    fontFamily,
+    height,
+    width,
+    opacity,
     margin,
-    icon,
     children,
     disabled,
     onClick,
@@ -31,9 +30,8 @@ const Button: FC<ButtonProps> = (props) => {
       fontSize={fontSize}
       margin={margin}
       disabled={disabled}
-      onClick={onClick}
+      onClick={onClick && onClick}
     >
-      {icon}
       {children}
     </Wrapper>
   );

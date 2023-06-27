@@ -1,60 +1,55 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { signOut } from 'firebase/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Button';
 import MenuItem from '@/components/MenuItem';
 import { Colors, icons, menuItems, sideMenuText, ThemeMode } from '@/constants';
-import { useActions } from '@/hooks/useActions';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useActions, useAppSelector, usePortal } from '@/hooks';
 import { auth } from '@/lib/firebase';
 import { themeSelector, userSelector } from '@/store/slices/userSlice/selectors';
 import { commonTheme } from '@/styles/theme';
-import { checkPath } from '@/utils/helpers/checkPath';
-import { createNewPortal } from '@/utils/helpers/createNewPortal';
+import { checkPath } from '@/utils';
 
 import { AppRoutes } from '../AppRouter/types';
 import CreateTweetBlock from '../CreateTweetBlock';
+import Portal from '../Portal';
 
 import { Credentials, Email, Icon, MenuWrapper, Name, UserInfo, Wrapper } from './styles';
 import { SideMenuProps } from './types';
 
-const { tweetButtonText, logoutButtonText, twitterAlt } = sideMenuText;
+const { tweetButtonText, logoutButtonText } = sideMenuText;
 
 const { MyLogoSvg, MyPhotoSvg } = icons;
 
 const SideMenu: FC<SideMenuProps> = ({ setTweets }) => {
-  const [isBurgerMenuVisible, setIsBurgerMenuVisible] = useState<boolean>(false);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
   const { removeUser } = useActions();
+
+  const [isModalVisible, onOpenModal, onCloseModal] = usePortal();
+  const [isBurgerMenuVisible, onOpenBurger, onCloseBurger] = usePortal();
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const { name, email, id, photo } = useAppSelector(userSelector);
   const currentTheme = useAppSelector(themeSelector);
+
   const isFeedPath = checkPath(pathname, AppRoutes.FEED);
   const isModal = true;
 
-  const onHandlerNavigate = () => {
+  const handleNavigate = () => {
     navigate(`/profile/${id}`);
   };
 
-  const onHandlerLogOut = () => {
+  const handleLogOut = () => {
     signOut(auth);
     removeUser();
   };
 
-  const onHandlerShowModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const onHandlerShowMenu = () => {
-    setIsBurgerMenuVisible(!isBurgerMenuVisible);
-  };
-
   return (
     <MenuWrapper>
-      <Icon src={MyLogoSvg} alt={twitterAlt} onClick={onHandlerShowMenu} />
-      {createNewPortal(
+      <Icon src={MyLogoSvg} alt="Twitter Logo" onClick={onOpenBurger} />
+      <Portal isVisible={isBurgerMenuVisible} onClose={onCloseBurger}>
         <Wrapper isBurgerMenuVisible={isBurgerMenuVisible} isModal={isModal} id="myModal">
           {menuItems.map(({ to, text, src, srcAlt }) => (
             <MenuItem
@@ -66,27 +61,28 @@ const SideMenu: FC<SideMenuProps> = ({ setTweets }) => {
               id={id}
             />
           ))}
-          {isBurgerMenuVisible &&
-            createNewPortal(
+          {isBurgerMenuVisible && (
+            <Portal isVisible={isModalVisible} onClose={onCloseModal}>
               <CreateTweetBlock
                 setTweets={setTweets}
                 isModal
-                setIsModalVisible={setIsModalVisible}
+                onClose={onCloseModal}
                 isModalVisible={isModalVisible}
               />
-            )}
+            </Portal>
+          )}
           <Button
             width={commonTheme.width.l}
             backgroundColor={Colors.DARK_BLUE}
             color={Colors.WHITE}
             fontSize={commonTheme.fontSizes.xxs}
             margin={commonTheme.margins.s}
-            onClick={onHandlerShowModal}
+            onClick={onOpenModal}
           >
             {tweetButtonText}
           </Button>
           <UserInfo>
-            <Icon src={photo || MyPhotoSvg} alt={twitterAlt} onClick={onHandlerNavigate} />
+            <Icon src={photo || MyPhotoSvg} alt="Twitter Logo" onClick={handleNavigate} />
             <Credentials>
               <Name>{name}</Name>
               <Email>{email}</Email>
@@ -94,7 +90,7 @@ const SideMenu: FC<SideMenuProps> = ({ setTweets }) => {
           </UserInfo>
           {!isFeedPath && (
             <Button
-              onClick={onHandlerLogOut}
+              onClick={handleLogOut}
               width={commonTheme.width.l}
               backgroundColor={Colors.GRAY}
               color={Colors.WHITE}
@@ -104,7 +100,7 @@ const SideMenu: FC<SideMenuProps> = ({ setTweets }) => {
             </Button>
           )}
         </Wrapper>
-      )}
+      </Portal>
       <Wrapper>
         {menuItems.map(({ to, text, src, srcAlt }) => (
           <MenuItem
@@ -116,27 +112,28 @@ const SideMenu: FC<SideMenuProps> = ({ setTweets }) => {
             id={id}
           />
         ))}
-        {!isBurgerMenuVisible &&
-          createNewPortal(
+        {!isBurgerMenuVisible && (
+          <Portal isVisible={isModalVisible} onClose={onCloseModal}>
             <CreateTweetBlock
               setTweets={setTweets}
               isModal
-              setIsModalVisible={setIsModalVisible}
+              onClose={onCloseModal}
               isModalVisible={isModalVisible}
             />
-          )}
+          </Portal>
+        )}
         <Button
           width={commonTheme.width.l}
           backgroundColor={Colors.DARK_BLUE}
           color={Colors.WHITE}
           fontSize={commonTheme.fontSizes.xxs}
           margin={commonTheme.margins.s}
-          onClick={onHandlerShowModal}
+          onClick={onOpenModal}
         >
           {tweetButtonText}
         </Button>
         <UserInfo>
-          <Icon src={photo || MyPhotoSvg} alt={twitterAlt} onClick={onHandlerNavigate} />
+          <Icon src={photo || MyPhotoSvg} alt="Twitter Logo" onClick={handleNavigate} />
           <Credentials>
             <Name>{name}</Name>
             <Email>{email}</Email>
@@ -144,7 +141,7 @@ const SideMenu: FC<SideMenuProps> = ({ setTweets }) => {
         </UserInfo>
         {!isFeedPath && (
           <Button
-            onClick={onHandlerLogOut}
+            onClick={handleLogOut}
             width={commonTheme.width.l}
             backgroundColor={Colors.GRAY}
             color={Colors.WHITE}

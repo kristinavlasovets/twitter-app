@@ -12,7 +12,7 @@ import {
   homePageText,
   icons,
 } from '@/constants';
-import { useActions } from '@/hooks/useActions';
+import { useActions } from '@/hooks';
 import { auth } from '@/lib/firebase';
 import { IUser } from '@/types';
 
@@ -38,11 +38,8 @@ import {
 } from './styles';
 
 const {
-  bannerAlt,
-  twitterLogoAlt,
   title,
   subTitle,
-  googleLogoAlt,
   signUpGoogleText,
   signUpEmailText,
   termsText,
@@ -76,7 +73,7 @@ const { SIGN_UP, LOGIN } = AppRoutes;
 const HomePage: FC = () => {
   const { setUser, setIsAlertVisible } = useActions();
 
-  const onHandlerGoogleSignUp = async () => {
+  const handleGoogleSignUp = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -138,16 +135,16 @@ const HomePage: FC = () => {
   return (
     <Wrapper>
       <Main>
-        <Banner src={MyBanner} alt={bannerAlt} />
+        <Banner src={MyBanner} alt="Twitter Banner" />
         <Form>
           <IconWrapper>
-            <Icon src={MyLogoSvg} alt={twitterLogoAlt} />
+            <Icon src={MyLogoSvg} alt="Twitter Logo" />
           </IconWrapper>
           <Title>{title}</Title>
           <SubTitle>{subTitle}</SubTitle>
-          <ButtonWrapper onClick={onHandlerGoogleSignUp}>
+          <ButtonWrapper onClick={handleGoogleSignUp} data-cy="GoogleSignIn">
             <ButtonWithIcon>
-              <ButtonIcon src={MyGoogleSvg} alt={googleLogoAlt} />
+              <ButtonIcon src={MyGoogleSvg} alt="Google Logo" />
               {signUpGoogleText}
             </ButtonWithIcon>
           </ButtonWrapper>

@@ -22,5 +22,5 @@ export const Title = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.ss}px;
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 `;

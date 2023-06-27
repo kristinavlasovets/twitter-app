@@ -1,12 +1,14 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 import { Colors, createTweetBlockText, icons } from '@/constants';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppSelector } from '@/hooks';
 import { userSelector } from '@/store/slices/userSlice/selectors';
 import { commonTheme } from '@/styles/theme';
-import { createNewTweet } from '@/utils/helpers/createNewTweet';
+import { createNewTweet } from '@/utils';
 
 import Button from '../Button';
+import Loader from '../Loader';
 
 import {
   FileWrapper,
@@ -22,22 +24,24 @@ import {
 } from './styles';
 import { CreateTweetBlockProps } from './types';
 
-const { buttonText, photoAlt, textAreaPlaceholder, imageAlt, cancelAlt, preloadAlt } =
-  createTweetBlockText;
+const { buttonText, textAreaPlaceholder } = createTweetBlockText;
 
 const { MyImageSvg, MyPhotoSvg, MyCloseSvg } = icons;
 
 const CreateTweetBlock: FC<CreateTweetBlockProps> = (props) => {
-  const { setTweets, isModal, isModalVisible, setIsModalVisible } = props;
+  const { setTweets, isModal, isModalVisible, onClose } = props;
+
   const { name, email, id, photo } = useAppSelector(userSelector);
+
   const [tweetValue, setTweetValue] = useState<string>('');
   const [image, setImage] = useState<File>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   if (!isModalVisible && isModal) {
     return null;
   }
 
-  const onHandlerCreateTweet = async (e: FormEvent) => {
+  const handleCreateTweet = async (e: FormEvent) => {
     e.preventDefault();
     if (tweetValue) {
       const tweet = await createNewTweet({ email, id, image, name, photo, tweetValue });
@@ -46,10 +50,10 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = (props) => {
     }
     setTweetValue('');
     setImage(undefined);
-    if (isModal) setIsModalVisible!(false);
+    if (isModal) onClose!();
   };
 
-  const onHandlerChangeInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     setTweetValue(value);
   };
@@ -57,26 +61,33 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = (props) => {
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files) {
+      setIsLoading(true);
+      const storage = getStorage();
+      const storageRef = ref(storage, 'some-child');
+
+      uploadBytes(storageRef, files[0]).then(() => {
+        setIsLoading(false);
+      });
+
       setImage(files[0]);
     }
   };
 
-  const onHandlerClose = () => {
-    setIsModalVisible!(false);
-  };
-
   return (
     <Wrapper isModal={isModal} data-cy="createTweetWrapper">
-      <Icon src={photo || MyPhotoSvg} alt={photoAlt} />
-      <Tweet onSubmit={onHandlerCreateTweet}>
+      <Icon src={photo || MyPhotoSvg} alt="Photo" />
+      <Tweet onSubmit={handleCreateTweet}>
         <TextAreaWrapper>
           <TextArea
-            data-cy="textArea"
+            data-cy={isModal ? 'modalTextArea' : 'textArea'}
             placeholder={textAreaPlaceholder}
             value={tweetValue}
-            onChange={onHandlerChangeInput}
+            onChange={handleChangeInput}
           />
-          {image && <PreloadImage src={URL.createObjectURL(image)} alt={preloadAlt} />}
+          {isLoading && <Loader />}
+          {!isLoading && image && (
+            <PreloadImage src={URL.createObjectURL(image)} alt="Image preload" />
+          )}
           <FileWrapper>
             <UploadFileLabel htmlFor={isModal ? 'fileModal' : 'file'}>
               <UploadFile
@@ -86,7 +97,7 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = (props) => {
                 accept="image/*"
                 onChange={handleFileChange}
               />
-              <ImageIcon src={MyImageSvg} alt={imageAlt} data-cy="uploadImage" />
+              <ImageIcon src={MyImageSvg} alt="Image" data-cy="uploadImage" />
             </UploadFileLabel>
           </FileWrapper>
         </TextAreaWrapper>
@@ -98,13 +109,13 @@ const CreateTweetBlock: FC<CreateTweetBlockProps> = (props) => {
           backgroundColor={Colors.DARK_BLUE}
           color={Colors.WHITE}
           fontSize={commonTheme.fontSizes.xxs}
-          disabled={tweetValue === ''}
+          disabled={tweetValue === '' || isLoading}
           opacity={commonTheme.opacities.s}
         >
           {buttonText}
         </Button>
       </Tweet>
-      {isModal && <ImageIcon src={MyCloseSvg} alt={cancelAlt} onClick={onHandlerClose} />}
+      {isModal && <ImageIcon src={MyCloseSvg} alt="Cancel" onClick={onClose} />}
     </Wrapper>
   );
 };

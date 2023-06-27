@@ -1,7 +1,4 @@
 export const homePageText = {
-  bannerAlt: 'Twitter Banner',
-  twitterLogoAlt: 'Twitter Logo',
-  googleLogoAlt: 'Google Logo',
   title: 'Happening now',
   subTitle: 'Join Twitter today',
   signUpGoogleText: 'Sign up with Google',
@@ -83,7 +80,6 @@ export const homePageText = {
 
 export const loginPageText = {
   title: 'Log in to Twitter',
-  twitterLogoAlt: 'Twitter Logo',
   emailPlaceholder: 'Email address',
   passwordPlaceholder: 'Password',
   buttonText: 'Log In',
@@ -94,7 +90,6 @@ export const loginPageText = {
 export const signUpPageText = {
   title: 'Create an account',
   subTitle: 'Date of birth',
-  twitterLogoAlt: 'Twitter Logo',
   namePlaceholder: 'Name',
   phonePlaceholder: 'Phone Number',
   emailPlaceholder: 'Email',
@@ -106,10 +101,6 @@ export const signUpPageText = {
     congue.`,
   minLengthValue: 5,
   maxLengthValue: 15,
-};
-
-export const profilePageText = {
-  bannerAlt: 'Profile Banner',
 };
 
 export const feedPageText = {

@@ -1,9 +1,10 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
-export interface SideSearchProps<T> {
+import { ICreator, ITweetBySearch } from '@/types';
+
+export interface SideSearchProps {
   placeholder: string;
-  getData: (searchValue: string) => Promise<T[]>;
-  Result: FC<T>;
+  getData: (searchValue: string) => Promise<ICreator[] | ITweetBySearch[]>;
   errorMessage: string;
 }
 

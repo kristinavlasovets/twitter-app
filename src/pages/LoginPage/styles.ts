@@ -8,7 +8,7 @@ export const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     padding: ${({ theme }) => theme.paddings.xs}px;
@@ -54,11 +54,11 @@ export const Input = styled.input`
   background: transparent;
   border: ${({ theme }) => theme.borders.s}px solid ${({ theme }) => theme.colors.LIGHT_GRAY};
   border-radius: ${({ theme }) => theme.borderRadiuses.s}px;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
 
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {

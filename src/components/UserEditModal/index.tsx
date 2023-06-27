@@ -12,8 +12,7 @@ import {
   validationErrors,
   validationPatterns,
 } from '@/constants';
-import { useActions } from '@/hooks/useActions';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useActions, useAppSelector } from '@/hooks';
 import { userSelector } from '@/store/slices/userSlice/selectors';
 
 import Alert from '../Alert';
@@ -25,7 +24,6 @@ import { UserEditModalProps, UserEditProps } from './types';
 const {
   buttonText,
   title,
-  cancelAlt,
   genderText,
   nameText,
   passwordText,
@@ -40,13 +38,14 @@ const { nameError, surnameError, passwordError } = validationErrors;
 const { MyCloseSvg } = icons;
 
 const UserEditModal: FC<UserEditModalProps> = (props) => {
-  const { isModalVisible, setIsModalVisible } = props;
+  const { isModalVisible, onClose } = props;
+
   const { updateUser: updateUserAction, setIsAlertVisible } = useActions();
   const {
-    gender: currGender,
-    name: currName,
-    surname: currSurname,
-    telegram: currTelegram,
+    gender: currentGender,
+    name: currentName,
+    surname: currentSurname,
+    telegram: currentTelegram,
     id,
   } = useAppSelector(userSelector);
 
@@ -56,7 +55,7 @@ const UserEditModal: FC<UserEditModalProps> = (props) => {
     formState: { errors },
   } = useForm<UserEditProps>({ mode: 'onChange' });
 
-  const onHandlerSubmit: SubmitHandler<UserEditProps> = async ({
+  const handleFormSubmit: SubmitHandler<UserEditProps> = async ({
     gender,
     name,
     password,
@@ -68,18 +67,18 @@ const UserEditModal: FC<UserEditModalProps> = (props) => {
         telegram = `@${telegram}`;
       }
       await updateUser({
-        gender: gender || currGender,
-        name: name || currName,
+        gender: gender || currentGender,
+        name: name || currentName,
         password,
-        surname: surname || currSurname,
-        telegram: telegram || currTelegram,
+        surname: surname || currentSurname,
+        telegram: telegram || currentTelegram,
       });
 
       updateUserAction({
-        gender: gender || currGender,
-        name: name || currName,
-        surname: surname || currSurname,
-        telegram: telegram || currTelegram,
+        gender: gender || currentGender,
+        name: name || currentName,
+        surname: surname || currentSurname,
+        telegram: telegram || currentTelegram,
       });
 
       const userTweets = await getTweetsById(tweetField.creatorId, id);
@@ -92,17 +91,13 @@ const UserEditModal: FC<UserEditModalProps> = (props) => {
         });
       });
 
-      setIsModalVisible!(false);
+      onClose();
     } catch (e) {
       setIsAlertVisible({
         isVisible: true,
-        message: 'Error',
+        message: 'You need to re-signin to update password',
       });
     }
-  };
-
-  const onHandlerClose = () => {
-    setIsModalVisible!(false);
   };
 
   if (!isModalVisible) {
@@ -111,13 +106,13 @@ const UserEditModal: FC<UserEditModalProps> = (props) => {
 
   return (
     <Wrapper>
-      <Form data-cy="formWrapper" onSubmit={handleSubmit(onHandlerSubmit)}>
-        <Icon src={MyCloseSvg} alt={cancelAlt} onClick={onHandlerClose} />
+      <Form data-cy="formWrapper" onSubmit={handleSubmit(handleFormSubmit)}>
+        <Icon src={MyCloseSvg} alt="Cancel" onClick={onClose} />
         <Title>{title}</Title>
         <Credentials>{nameText}</Credentials>
         <Input
           data-cy="nameField"
-          placeholder={currName}
+          placeholder={currentName}
           type="text"
           {...register('name', { maxLength: maxLengthValue, pattern: namePattern })}
         />
@@ -125,7 +120,7 @@ const UserEditModal: FC<UserEditModalProps> = (props) => {
         <Credentials>{surnameText}</Credentials>
         <Input
           data-cy="surnameField"
-          placeholder={currSurname}
+          placeholder={currentSurname}
           type="text"
           {...register('surname', { maxLength: maxLengthValue, pattern: namePattern })}
         />
@@ -133,12 +128,17 @@ const UserEditModal: FC<UserEditModalProps> = (props) => {
         <Credentials>{telegramText}</Credentials>
         <Input
           data-cy="telegramField"
-          placeholder={currTelegram}
+          placeholder={currentTelegram}
           type="text"
           {...register('telegram')}
         />
         <Credentials>{genderText}</Credentials>
-        <Input data-cy="genderField" placeholder={currGender} type="text" {...register('gender')} />
+        <Input
+          data-cy="genderField"
+          placeholder={currentGender}
+          type="text"
+          {...register('gender')}
+        />
         <Credentials>{passwordText}</Credentials>
         <Input
           placeholder="type new password"

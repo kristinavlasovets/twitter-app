@@ -6,7 +6,7 @@ export interface CreateTweetBlockProps {
   isModal?: boolean;
   isModalVisible?: boolean;
 
-  setIsModalVisible?: Dispatch<SetStateAction<boolean>>;
+  onClose?: () => void;
   setTweets: Dispatch<SetStateAction<ITweet[]>>;
 }
 

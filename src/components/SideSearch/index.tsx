@@ -1,14 +1,16 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { icons, sideSearchText } from '@/constants';
-import { useActions } from '@/hooks/useActions';
+import { useActions } from '@/hooks';
 import { ICreator, ITweetBySearch } from '@/types';
-import { checkPath } from '@/utils/helpers/checkPath';
+import { checkPath } from '@/utils';
 
 import Alert from '../Alert';
 import { AppRoutes } from '../AppRouter/types';
 import Loader from '../Loader';
+import TweetSearchResult from '../TweetSearchResult';
+import UserSearchResult from '../UserSearchResult';
 
 import {
   Button,
@@ -26,31 +28,33 @@ import {
 } from './styles';
 import { SetState, SideSearchProps } from './types';
 
-const { title, link, searchIconAlt, navLinks, copyrightText } = sideSearchText;
+const { title, link, navLinks, copyrightText } = sideSearchText;
 
 const { MySearchSvg } = icons;
 
-const SideSearch: FC<SideSearchProps<any>> = (props) => {
-  const { placeholder, getData, Result, errorMessage } = props;
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+const SideSearch = (props: SideSearchProps) => {
+  const { setIsAlertVisible } = useActions();
+
+  const { placeholder, getData, errorMessage } = props;
+
   const { pathname } = useLocation();
   const isFeedPath = checkPath(pathname, AppRoutes.FEED);
-  const { setIsAlertVisible } = useActions();
-  const [searchValue, setSearchValue] = useState<string>('');
 
+  const [searchValue, setSearchValue] = useState<string>('');
   const [users, setUsers] = useState<ICreator[]>([]);
   const [tweets, setTweets] = useState<ITweetBySearch[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const usersResult = users.map((data) => <Result {...data} key={data.id} />);
-  const tweetsResult = tweets.map((data) => <Result {...data} key={data.id} />);
+  const usersResult = users.map((data) => <UserSearchResult {...data} key={data.id} />);
+  const tweetsResult = tweets.map((data) => <TweetSearchResult {...data} key={data.id} />);
 
-  const onHandlerChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsLoading(false);
     const { value } = e.target;
     setSearchValue(value);
   };
 
-  const onHandlerSearchData = async <T,>(stateSetter: SetState<T[]>) => {
+  const handleSearchData = async <T,>(stateSetter: SetState<T[]>) => {
     setIsLoading(true);
     if (searchValue) {
       const newData = (await getData(searchValue)) as T[];
@@ -69,20 +73,20 @@ const SideSearch: FC<SideSearchProps<any>> = (props) => {
     setIsLoading(false);
   };
 
-  const onHandlerSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (isFeedPath) onHandlerSearchData(setUsers);
-    if (!isFeedPath) onHandlerSearchData(setTweets);
+    if (isFeedPath) handleSearchData(setUsers);
+    if (!isFeedPath) handleSearchData(setTweets);
   };
 
   return (
     <Wrapper>
-      <SearchWrapper onSubmit={onHandlerSubmit}>
+      <SearchWrapper onSubmit={handleSubmit}>
         <Button type="submit">
-          <Icon src={MySearchSvg} alt={searchIconAlt} />
+          <Icon src={MySearchSvg} alt="Search users" />
         </Button>
-        <Input placeholder={placeholder} value={searchValue} onChange={onHandlerChange} />
+        <Input placeholder={placeholder} value={searchValue} onChange={handleChange} />
       </SearchWrapper>
       {isLoading ? (
         <Loader />

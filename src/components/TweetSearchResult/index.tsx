@@ -14,7 +14,7 @@ const { buttonText } = tweetSearchResultText;
 const TweetSearchResult: FC<TweetSearchResultProps> = memo((props) => {
   const { id, text } = props;
   const navigate = useNavigate();
-  const onHandlerNavigate = () => {
+  const handleNavigate = () => {
     navigate(`/feed/${id}`);
   };
 
@@ -24,7 +24,7 @@ const TweetSearchResult: FC<TweetSearchResultProps> = memo((props) => {
         <UserName>{text}</UserName>
       </User>
       <Button
-        onClick={onHandlerNavigate}
+        onClick={handleNavigate}
         width={commonTheme.width.ss}
         height={commonTheme.height.ss}
         backgroundColor={commonTheme.colors.RED}

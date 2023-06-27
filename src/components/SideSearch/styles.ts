@@ -9,7 +9,7 @@ export const Wrapper = styled.header`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     padding: ${({ theme }) => theme.paddings.xs}px;
@@ -145,7 +145,7 @@ export const NavItem = styled.li`
 `;
 
 export const NavItemLink = styled(Link)`
-  color: ${(props) => props.theme.subtitleColor};
+  color: ${({ theme }) => theme.subtitleColor};
   &:hover {
     text-decoration: underline;
     color: ${({ theme }) => theme.colors.BLUE};

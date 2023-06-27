@@ -14,7 +14,7 @@ export interface TweetItemProps {
   image?: string;
 
   setTweets: Dispatch<SetStateAction<ITweet[]>>;
-  onHandlerGetTweets: () => void;
+  handleGetTweets: () => void;
 }
 
 export interface LikeCountProps {

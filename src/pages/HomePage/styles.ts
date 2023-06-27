@@ -129,7 +129,7 @@ export const Button = css`
   border-radius: ${({ theme }) => theme.borderRadiuses.xl}px;
   font-weight: ${({ theme }) => theme.fontWeights.l};
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   &:hover {
     scale: 1.1;

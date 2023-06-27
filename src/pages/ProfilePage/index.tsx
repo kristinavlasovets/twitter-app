@@ -9,36 +9,33 @@ import Header from '@/components/Header';
 import SideMenu from '@/components/SideMenu';
 import SideSearch from '@/components/SideSearch';
 import TweetItem from '@/components/TweetItem';
-import TweetSearchResult from '@/components/TweetSearchResult';
 import UserBanner from '@/components/UserBanner';
-import { FirebaseCollections, profilePageText, tweetField } from '@/constants';
+import { FirebaseCollections, tweetField } from '@/constants';
 import { ITweet, IUser } from '@/types';
 
 import { Banner, MainWrapper, Title, Wrapper } from './styles';
 
-const { bannerAlt } = profilePageText;
-
 const ProfilePage: FC = () => {
   const [user, setUser] = useState<IUser>({} as IUser);
   const [tweets, setTweets] = useState<ITweet[]>([]);
+
   const { pathname } = useLocation();
   const pathNameIndex = 2;
   const pathId = pathname.split('/')[pathNameIndex];
-  const zeroLength = 0;
 
-  const onHandlerGetUser = async () => {
+  const handleGetUser = async () => {
     const currentUser = (await getDocument(FirebaseCollections.USERS, pathId)) as IUser | false;
     if (currentUser) setUser(currentUser);
   };
 
-  const onHandlerGetUserTweets = async () => {
+  const handleGetUserTweets = async () => {
     const result = await getTweetsById(tweetField.creatorId, pathId);
     setTweets(result);
   };
 
   useEffect(() => {
-    onHandlerGetUser();
-    onHandlerGetUserTweets();
+    handleGetUser();
+    handleGetUserTweets();
   }, [pathId]);
 
   const { photo, email, gender, name, phone, telegram, id, surname } = user;
@@ -48,7 +45,7 @@ const ProfilePage: FC = () => {
       <SideMenu setTweets={setTweets} />
       <MainWrapper>
         <Header tweetsCount={tweets.length} />
-        <Banner src={MyBanner} alt={bannerAlt} />
+        <Banner src={MyBanner} alt="Profile Banner" />
         <UserBanner
           photo={photo}
           email={email}
@@ -61,7 +58,7 @@ const ProfilePage: FC = () => {
         />
         <CreateTweetBlock setTweets={setTweets} />
         <Title>Tweets</Title>
-        {tweets.length > zeroLength &&
+        {tweets.length > 0 &&
           tweets.map(({ date, text, image, likes, tweetId, creator }) => (
             <TweetItem
               key={tweetId}
@@ -75,14 +72,13 @@ const ProfilePage: FC = () => {
               image={image}
               likes={likes}
               setTweets={setTweets}
-              onHandlerGetTweets={onHandlerGetUserTweets}
+              handleGetTweets={handleGetUserTweets}
             />
           ))}
       </MainWrapper>
       <SideSearch
         placeholder="Search Tweets"
         getData={getTweetsBySearch}
-        Result={TweetSearchResult}
         errorMessage="Tweet not found"
       />
       <Alert />

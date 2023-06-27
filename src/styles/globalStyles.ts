@@ -2,8 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
 * {
-    background-color: ${(props) => props.theme.bodyColor};
-    color: ${(props) => props.theme.fontColor};
+    background-color: ${({ theme }) => theme.bodyColor};
+    color: ${({ theme }) => theme.fontColor};
     font-family: 'Roboto', sans-serif;
     margin: ${({ theme }) => theme.margins.xxs}px;
     padding: ${({ theme }) => theme.paddings.xxs}px;

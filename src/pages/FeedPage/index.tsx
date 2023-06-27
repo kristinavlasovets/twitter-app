@@ -8,25 +8,24 @@ import Header from '@/components/Header';
 import SideMenu from '@/components/SideMenu';
 import SideSearch from '@/components/SideSearch';
 import TweetItem from '@/components/TweetItem';
-import UserSearchResult from '@/components/UserSearchResult';
 import { feedPageText } from '@/constants';
 import { ITweet } from '@/types';
 
 import { MainWrapper, Title, Wrapper } from './styles';
 
-const { sideTitle, userError, zeroLength, title } = feedPageText;
+const { sideTitle, userError, title } = feedPageText;
 
 const FeedPage: FC = () => {
   const [tweets, setTweets] = useState<ITweet[]>([]);
   const params = useParams();
 
-  const onHandlerGetTweets = async () => {
+  const handleGetTweets = async () => {
     const result = await getAllTweets();
     setTweets(result);
   };
 
   useEffect(() => {
-    onHandlerGetTweets();
+    handleGetTweets();
   }, []);
 
   const tweetBySearch = tweets.filter((item) => item.id === params?.id) as ITweet[];
@@ -40,7 +39,7 @@ const FeedPage: FC = () => {
           <>
             <CreateTweetBlock setTweets={setTweets} />
             <Title>{title}</Title>
-            {tweets.length > zeroLength &&
+            {tweets.length > 0 &&
               tweets.map(({ date, text, image, likes, tweetId, creator }) => (
                 <TweetItem
                   key={tweetId}
@@ -54,12 +53,12 @@ const FeedPage: FC = () => {
                   image={image}
                   likes={likes}
                   setTweets={setTweets}
-                  onHandlerGetTweets={onHandlerGetTweets}
+                  handleGetTweets={handleGetTweets}
                 />
               ))}
           </>
         ) : (
-          tweetBySearch.length > zeroLength &&
+          tweetBySearch.length > 0 &&
           tweetBySearch.map(({ date, text, image, likes, tweetId, creator }) => (
             <TweetItem
               key={tweetId}
@@ -73,17 +72,12 @@ const FeedPage: FC = () => {
               image={image}
               likes={likes}
               setTweets={setTweets}
-              onHandlerGetTweets={onHandlerGetTweets}
+              handleGetTweets={handleGetTweets}
             />
           ))
         )}
       </MainWrapper>
-      <SideSearch
-        placeholder={sideTitle}
-        getData={getUsersBySearch}
-        Result={UserSearchResult}
-        errorMessage={userError}
-      />
+      <SideSearch placeholder={sideTitle} getData={getUsersBySearch} errorMessage={userError} />
       <Alert />
     </Wrapper>
   );

@@ -9,11 +9,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fontSize?: number;
   opacity?: number;
   margin?: number;
-  icon?: ReactNode;
   children?: ReactNode;
   disabled?: boolean;
 
   onClick?: () => void;
 }
 
-export type WrapperProps = Omit<ButtonProps, 'children' | 'icon'>;
+export type WrapperProps = Omit<ButtonProps, 'children'>;

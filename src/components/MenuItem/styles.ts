@@ -9,7 +9,7 @@ export const Wrapper = styled(Link)`
   justify-content: space-between;
   font-weight: ${({ theme }) => theme.fontWeights.m};
   font-size: ${({ theme }) => theme.fontSizes.xs}px;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     margin-top: ${({ theme }) => theme.margins.xs}%;

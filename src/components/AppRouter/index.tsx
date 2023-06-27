@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppSelector } from '@/hooks';
 import { isAuthSelector } from '@/store/slices/userSlice/selectors';
 
 import { privateAppRoutes, publicAppRoutes } from './config';

@@ -15,13 +15,14 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "project": "./tsconfig.json"
+    "project": ["./tsconfig.json"]
   },
   "plugins": ["simple-import-sort", "@typescript-eslint", "react", "prettier"],
   "rules": {
     "react-refresh/only-export-components": "off",
     "import/no-extraneous-dependencies": "off",
     "@typescript-eslint/no-shadow": "off",
+    "newline-per-chained-call": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-no-useless-fragment": "off",
     "implicit-arrow-linebreak": "off",

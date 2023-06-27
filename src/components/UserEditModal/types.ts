@@ -1,10 +1,8 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { IUser } from '@/types';
 
 export interface UserEditModalProps {
-  isModalVisible?: boolean;
-  setIsModalVisible?: Dispatch<SetStateAction<boolean>>;
+  isModalVisible: boolean;
+  onClose: () => void;
 }
 
 export type UserEditProps = Pick<

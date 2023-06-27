@@ -12,7 +12,7 @@ export const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
   border-bottom: ${({ theme }) => theme.borders.s}px solid
     ${({ theme }) => theme.colors.BORDER_GRAY};
 
@@ -31,7 +31,7 @@ export const Tweet = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
 `;
 
 export const TweetContentWrapper = styled.div`
@@ -116,7 +116,7 @@ export const Name = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs}px;
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.m}px;
@@ -128,7 +128,7 @@ export const Credentials = styled.p`
   margin-top: ${({ theme }) => theme.margins.xs}px;
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
-  color: ${(props) => props.theme.subtitleColor};
+  color: ${({ theme }) => theme.subtitleColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.s}px;
@@ -141,7 +141,7 @@ export const TweetText = styled.p`
   width: ${({ theme }) => theme.width.l}%;
   height: fit-content;
   background: transparent;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
 

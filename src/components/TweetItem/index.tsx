@@ -3,11 +3,10 @@ import { useLocation } from 'react-router-dom';
 
 import { deleteDocument } from '@/api/firebase/deleteDocument';
 import { setLikeOnTweet } from '@/api/firebase/setLikeOnTweet';
-import { FirebaseCollections, icons, tweetItemText } from '@/constants';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { FirebaseCollections, icons } from '@/constants';
+import { useAppSelector } from '@/hooks';
 import { themeSelector, userIdSelector } from '@/store/slices/userSlice/selectors';
-import { checkPath } from '@/utils/helpers/checkPath';
-import { getTweetCreatedTime } from '@/utils/helpers/getTweetCreatedTime';
+import { checkPath, getTweetCreatedTime } from '@/utils';
 
 import { AppRoutes } from '../AppRouter/types';
 
@@ -28,8 +27,6 @@ import {
   Wrapper,
 } from './styles';
 import { TweetItemProps } from './types';
-
-const { photoAlt, editAlt, deleteAlt, cancelAlt, likeAlt } = tweetItemText;
 
 const {
   MyCloseSvg,
@@ -54,13 +51,17 @@ const TweetItem: FC<TweetItemProps> = (props) => {
     photo,
     tweetId,
     setTweets,
-    onHandlerGetTweets,
+    handleGetTweets,
   } = props;
+
   const [isRemoveVisible, setIsRemoveVisible] = useState(false);
+
   const { pathname } = useLocation();
-  const currentTheme = useAppSelector(themeSelector);
   const isFeedPath = checkPath(pathname, AppRoutes.FEED);
+
+  const currentTheme = useAppSelector(themeSelector);
   const userId = useAppSelector(userIdSelector);
+
   const isLiked = likes.includes(userId);
   const monthStart = 4;
   const dayEnd = 11;
@@ -68,26 +69,26 @@ const TweetItem: FC<TweetItemProps> = (props) => {
 
   const tweetCreatedTime = getTweetCreatedTime(date);
 
-  const onHandlerLikeTweet = async () => {
+  const handleLikeTweet = async () => {
     await setLikeOnTweet(tweetId, userId);
-    onHandlerGetTweets();
+    handleGetTweets();
   };
 
-  const onHandlerShowRemove = () => {
+  const handleShowRemove = () => {
     setIsRemoveVisible(true);
   };
 
-  const onHandlerDeleteTweet = async () => {
+  const handleDeleteTweet = async () => {
     await deleteDocument(FirebaseCollections.TWEETS, tweetId);
     setTweets((prev) => prev.filter((item) => item.tweetId !== tweetId));
   };
 
-  const onHandlerClose = () => {
+  const handleClose = () => {
     setIsRemoveVisible(false);
   };
   return (
     <Wrapper data-cy="tweetItemWrapper">
-      <Icon src={photo || MyPhotoSvg} alt={photoAlt} />
+      <Icon src={photo || MyPhotoSvg} alt="Photo" />
       <Tweet>
         <TweetContentWrapper>
           <Info>
@@ -99,29 +100,29 @@ const TweetItem: FC<TweetItemProps> = (props) => {
                 <EditIcon
                   data-cy="editIcon"
                   src={currentTheme === 'dark' ? MyWhiteEditSvg : MyEditSvg}
-                  alt={editAlt}
-                  onClick={onHandlerShowRemove}
+                  alt="Edit"
+                  onClick={handleShowRemove}
                 />
                 {isRemoveVisible && (
                   <IconWrapper>
                     <ImageIcon
                       data-cy="deleteIcon"
                       src={MyDeleteSvg}
-                      alt={deleteAlt}
-                      onClick={onHandlerDeleteTweet}
+                      alt="Delete Tweet"
+                      onClick={handleDeleteTweet}
                     />
                     <ImageIcon
                       data-cy="closeIcon"
                       src={MyCloseSvg}
-                      alt={cancelAlt}
-                      onClick={onHandlerClose}
+                      alt="Cancel"
+                      onClick={handleClose}
                     />
                   </IconWrapper>
                 )}
               </>
             )}
           </Info>
-          <TweetText>{text}</TweetText>
+          <TweetText data-cy="tweetItemText">{text}</TweetText>
           {image && (
             <ImageWrapper>
               <Image src={image} />
@@ -133,8 +134,8 @@ const TweetItem: FC<TweetItemProps> = (props) => {
               src={
                 isLiked ? MyRedLikeSvg : (currentTheme === 'dark' && MyWhiteLikeSvg) || MyLikeSvg
               }
-              alt={likeAlt}
-              onClick={onHandlerLikeTweet}
+              alt="Like"
+              onClick={handleLikeTweet}
             />
             <LikeCount isLiked={isLiked}>{likes.length}</LikeCount>
           </Info>

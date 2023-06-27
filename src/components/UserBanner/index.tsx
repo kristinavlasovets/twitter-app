@@ -1,10 +1,10 @@
-import { FC, memo, useState } from 'react';
+import { FC, memo } from 'react';
 
 import { icons, userBannerText } from '@/constants';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppSelector, usePortal } from '@/hooks';
 import { userSelector } from '@/store/slices/userSlice/selectors';
-import { createNewPortal } from '@/utils/helpers/createNewPortal';
 
+import Portal from '../Portal';
 import UserEditModal from '../UserEditModal';
 
 import {
@@ -21,14 +21,15 @@ import {
 } from './styles';
 import { UserBannerProps } from './types';
 
-const { buttonText, twitterAlt, followersText, followingText, followersCount, followingCount } =
-  userBannerText;
+const { buttonText, followersText, followingText, followersCount, followingCount } = userBannerText;
 
 const { MyPhotoSvg } = icons;
 
 const UserBanner: FC<UserBannerProps> = memo((props) => {
   const { photo, name, email, gender, telegram, id } = props;
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const [isModalVisible, onOpenModal, onCloseModal] = usePortal();
+
   const {
     id: authUserId,
     name: authUserName,
@@ -37,14 +38,10 @@ const UserBanner: FC<UserBannerProps> = memo((props) => {
     telegram: authUserTelegram,
   } = useAppSelector(userSelector);
 
-  const onHandlerEditProfile = () => {
-    setIsModalVisible(true);
-  };
-
   return (
     <Wrapper data-cy="userBannerWrapper">
       <UserInfo>
-        <Icon src={photo || MyPhotoSvg} alt={twitterAlt} />
+        <Icon src={photo || MyPhotoSvg} alt="Twitter Logo" />
         <Name data-cy="userBannerName">{id === authUserId ? authUserName : name}</Name>
         <Credentials>{id === authUserId ? authUserEmail : email}</Credentials>
         <Text data-cy="userBannerGender">
@@ -61,13 +58,13 @@ const UserBanner: FC<UserBannerProps> = memo((props) => {
         </Statistics>
       </UserInfo>
       {id === authUserId && (
-        <Button data-cy="editButton" onClick={onHandlerEditProfile}>
+        <Button data-cy="editButton" onClick={onOpenModal}>
           {buttonText}
         </Button>
       )}
-      {createNewPortal(
-        <UserEditModal setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible} />
-      )}
+      <Portal isVisible={isModalVisible} onClose={onCloseModal}>
+        <UserEditModal onClose={onCloseModal} isModalVisible={isModalVisible} />
+      </Portal>
     </Wrapper>
   );
 });

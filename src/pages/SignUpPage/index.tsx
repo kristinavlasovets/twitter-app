@@ -17,9 +17,9 @@ import {
   validationErrors,
   validationPatterns,
 } from '@/constants';
-import { useActions } from '@/hooks/useActions';
+import { useActions } from '@/hooks';
 import { commonTheme } from '@/styles/theme';
-import { getDays, getYears } from '@/utils/helpers/dateSelector';
+import { getDays, getYears } from '@/utils';
 
 import {
   DayYearSelector,
@@ -38,7 +38,6 @@ import {
 import { SignUpFormInputProps } from './types';
 
 const {
-  twitterLogoAlt,
   title,
   subTitle,
   namePlaceholder,
@@ -69,16 +68,16 @@ const SignUpPage: FC = () => {
     formState: { isValid, errors },
   } = useForm<SignUpFormInputProps>({ mode: 'onChange' });
 
-  const onHandlerSetMonth = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleSetMonth = (event: React.ChangeEvent<{ value: unknown }>) => {
     const monthIndex = monthNames.indexOf(event.target.value as string);
     setMonth(monthIndex);
   };
 
-  const onHandlerSetYear = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleSetYear = (event: React.ChangeEvent<{ value: unknown }>) => {
     setYear(Number(event.target.value as string));
   };
 
-  const onHandlerSubmit: SubmitHandler<SignUpFormInputProps> = async ({
+  const handleFormSubmit: SubmitHandler<SignUpFormInputProps> = async ({
     name,
     email,
     phone,
@@ -141,9 +140,9 @@ const SignUpPage: FC = () => {
   };
 
   return (
-    <Wrapper onSubmit={handleSubmit(onHandlerSubmit)}>
+    <Wrapper onSubmit={handleSubmit(handleFormSubmit)}>
       <IconWrapper>
-        <Icon src={MyLogoSvg} alt={twitterLogoAlt} />
+        <Icon src={MyLogoSvg} alt="Twitter Logo" />
       </IconWrapper>
       <Title>{title}</Title>
       <Input
@@ -188,7 +187,7 @@ const SignUpPage: FC = () => {
       <Subtitle>{subTitle}</Subtitle>
       <Text>{infoText}</Text>
       <Selectors>
-        <MonthSelector {...register('month')} onChange={onHandlerSetMonth}>
+        <MonthSelector {...register('month')} onChange={handleSetMonth}>
           {monthNames.map((item) => (
             <option key={item} value={item}>
               {item}
@@ -202,7 +201,7 @@ const SignUpPage: FC = () => {
             </option>
           ))}
         </DayYearSelector>
-        <DayYearSelector {...register('year')} onChange={onHandlerSetYear}>
+        <DayYearSelector {...register('year')} onChange={handleSetYear}>
           {getYears().map((item) => (
             <option key={item} value={item}>
               {item}

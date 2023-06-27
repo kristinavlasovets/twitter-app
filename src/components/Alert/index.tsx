@@ -1,8 +1,7 @@
 import { FC, useEffect } from 'react';
 
 import { deafaultAlertValue } from '@/constants';
-import { useActions } from '@/hooks/useActions';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useActions, useAppSelector } from '@/hooks';
 
 import { Message } from './styles';
 

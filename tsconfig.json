@@ -3,7 +3,6 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    // "lib": ["WebWorker"],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -26,7 +25,7 @@
     "allowSyntheticDefaultImports": true
   },
   "types": ["node", "jest", "@testing-library/jest-dom"],
-  "include": ["src", ".eslintrc.js", "vite.config.ts", "cypress.config.ts"],
+  "include": ["src", ".eslintrc.js", "vite.config.ts", "cypress.config.ts", "cypress"],
   "exclude": ["__mocks__"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

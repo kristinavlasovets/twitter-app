@@ -15,7 +15,7 @@ export const Wrapper = styled.div<MenuWrapperProps>`
   display: ${({ isModal }) => (isModal ? 'none' : 'flex')};
   border-radius: ${({ theme, isModal }) => (isModal ? theme.borderRadiuses.l : '')}px;
   border: ${({ theme, isModal }) => (isModal ? theme.borders.s : '')}px solid
-    ${(props) => props.theme.fontColor};
+    ${({ theme }) => theme.fontColor};
   flex-direction: column;
   align-self: flex-start;
 
@@ -46,7 +46,7 @@ export const MenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     padding: ${({ theme }) => theme.paddings.xs}px;
@@ -67,7 +67,7 @@ export const UserInfo = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
     margin: ${({ theme }) => theme.margins.xs}%;
@@ -89,14 +89,14 @@ export const Credentials = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
 `;
 
 export const Name = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.l};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.m}px;
@@ -108,7 +108,7 @@ export const Email = styled.p`
   margin-top: ${({ theme }) => theme.margins.xs}px;
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
-  color: ${(props) => props.theme.subtitleColor};
+  color: ${({ theme }) => theme.subtitleColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.m}px;

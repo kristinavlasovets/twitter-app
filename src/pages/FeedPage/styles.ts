@@ -28,7 +28,7 @@ export const MainWrapper = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
   border: ${({ theme }) => theme.borders.s}px solid ${({ theme }) => theme.colors.BORDER_GRAY};
 
   @media (max-width: ${({ theme }) => theme.dimensions.mobile}px) {
@@ -50,5 +50,5 @@ export const Title = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs}px;
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 `;

@@ -7,7 +7,7 @@ const fade = keyframes`
 100% { opacity: 1}
 `;
 
-export const Wrapper = styled.header<WrapperProps>`
+export const Wrapper = styled.div<WrapperProps>`
   position: ${({ isModal }) => (isModal ? 'fixed' : 'relative')};
   top: ${({ theme, isModal }) => (isModal ? theme.top.xxs : '')}%;
   left: ${({ theme, isModal }) => (isModal ? theme.left.s : '')}%;
@@ -25,12 +25,12 @@ export const Wrapper = styled.header<WrapperProps>`
 
   border-radius: ${({ theme, isModal }) => (isModal ? theme.borderRadiuses.l : 'none')}px;
   border: ${({ theme, isModal }) => (isModal ? theme.borders.s : 'none')}px solid
-    ${(props) => props.theme.fontColor};
+    ${({ theme }) => theme.fontColor};
 
   z-index: ${({ theme }) => theme.zIndexes.m};
 
   animation-duration: 0.5s;
-  animation-name: ${fade};
+  animation-name: ${({ isModal }) => !isModal && fade};
   animation-delay: 0.5s;
   animation-fill-mode: backwards;
 
@@ -92,7 +92,7 @@ export const TextArea = styled.textarea`
   width: ${({ theme }) => theme.width.xl}%;
   height: ${({ theme }) => theme.height.ss}px;
   background: transparent;
-  color: ${(props) => props.theme.subtitleColor};
+  color: ${({ theme }) => theme.subtitleColor};
   font-size: ${({ theme }) => theme.fontSizes.xs}px;
   font-weight: ${({ theme }) => theme.fontWeights.m};
   resize: none;
@@ -100,7 +100,7 @@ export const TextArea = styled.textarea`
   outline: none;
 
   &::placeholder {
-    color: ${(props) => props.theme.subtitleColor};
+    color: ${({ theme }) => theme.subtitleColor};
     opacity: ${({ theme }) => theme.opacities.m};
   }
 

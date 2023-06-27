@@ -9,7 +9,7 @@ export const HeaderWrapper = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
   border-bottom: ${({ theme }) => theme.borders.s}px solid
     ${({ theme }) => theme.colors.BORDER_GRAY};
 
@@ -37,7 +37,7 @@ export const HeaderNav = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
 `;
 
 export const HeaderHomeNav = styled.nav`
@@ -51,7 +51,7 @@ export const Title = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.ss}px;
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.l}px;
@@ -62,7 +62,7 @@ export const Counter = styled.p`
   margin-top: ${({ theme }) => theme.margins.xs}px;
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
-  color: ${(props) => props.theme.subtitleColor};
+  color: ${({ theme }) => theme.subtitleColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.m}px;
@@ -75,14 +75,14 @@ export const ToggleSwitch = styled.input`
   position: relative;
   height: ${({ theme }) => theme.height.s}px;
   width: ${({ theme }) => theme.width.ss}px;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
   border-radius: ${({ theme }) => theme.borderRadiuses.l}px;
-  border: ${({ theme }) => theme.borders.s}px solid ${(props) => props.theme.fontColor};
+  border: ${({ theme }) => theme.borders.s}px solid ${({ theme }) => theme.fontColor};
   cursor: pointer;
   outline: none;
 
   &:hover {
-    background-color: ${(props) => props.theme.fontColor};
+    background-color: ${({ theme }) => theme.fontColor};
   }
 
   &:before {
@@ -91,9 +91,9 @@ export const ToggleSwitch = styled.input`
     height: ${({ theme }) => theme.height.xs}px;
     width: ${({ theme }) => theme.width.xs}px;
     left: ${({ theme }) => theme.left.s}px;
-    background-color: ${(props) => props.theme.bodyColor};
+    background-color: ${({ theme }) => theme.bodyColor};
     border-radius: ${({ theme }) => theme.borderRadiuses.xl}%;
-    border: 1px solid ${(props) => props.theme.fontColor};
+    border: 1px solid ${({ theme }) => theme.fontColor};
     cursor: pointer;
     transition: 0.3s;
   }

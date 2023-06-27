@@ -34,9 +34,9 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   border-radius: ${({ theme }) => theme.borderRadiuses.l}px;
-  border: ${({ theme }) => theme.borders.s}px solid ${(props) => props.theme.fontColor};
+  border: ${({ theme }) => theme.borders.s}px solid ${({ theme }) => theme.fontColor};
 `;
 
 export const Title = styled.h3`
@@ -59,11 +59,11 @@ export const Input = styled.input`
   background: transparent;
   border: ${({ theme }) => theme.borders.s}px solid ${({ theme }) => theme.colors.LIGHT_GRAY};
   border-radius: ${({ theme }) => theme.borderRadiuses.s}px;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
 
   &::placeholder {
-    color: ${(props) => props.theme.fontColor};
+    color: ${({ theme }) => theme.fontColor};
   }
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
@@ -96,7 +96,7 @@ export const Credentials = styled.p`
   margin-bottom: ${({ theme }) => theme.margins.xs}px;
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
-  color: ${(props) => props.theme.subtitleColor};
+  color: ${({ theme }) => theme.subtitleColor};
   align-self: flex-start;
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {

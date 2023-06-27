@@ -15,7 +15,7 @@ export const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
   border-bottom: ${({ theme }) => theme.borders.s}px solid
     ${({ theme }) => theme.colors.BORDER_GRAY};
 `;
@@ -29,7 +29,7 @@ export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: ${(props) => props.theme.bodyColor};
+  background-color: ${({ theme }) => theme.bodyColor};
 `;
 
 export const Icon = styled.img`
@@ -52,7 +52,7 @@ export const Name = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.ss}px;
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.m}px;
@@ -64,7 +64,7 @@ export const Credentials = styled.p`
   margin-top: ${({ theme }) => theme.margins.xs}px;
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
   font-weight: ${({ theme }) => theme.fontWeights.s};
-  color: ${(props) => props.theme.subtitleColor};
+  color: ${({ theme }) => theme.subtitleColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.m}px;
@@ -127,7 +127,7 @@ export const Count = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs}px;
   font-weight: ${({ theme }) => theme.fontWeights.xl};
   font-family: ${({ theme }) => theme.fontFamilies.robotoSerif};
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   @media (min-width: ${({ theme }) => theme.dimensions.bigScreen}px) {
     font-size: ${({ theme }) => theme.fontSizes.m}px;
@@ -146,7 +146,7 @@ export const Button = styled.button`
   border-radius: ${({ theme }) => theme.borderRadiuses.xl}px;
   font-weight: ${({ theme }) => theme.fontWeights.m};
   font-size: ${({ theme }) => theme.fontSizes.xxs}px;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 
   &:hover {
     -webkit-animation: ${hint} 200ms ease-out;

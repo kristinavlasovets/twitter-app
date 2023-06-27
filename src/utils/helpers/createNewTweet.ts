@@ -16,12 +16,6 @@ export const createNewTweet = async (options: INewTweet) => {
     likes: [],
   };
 
-  await createDocument({
-    collection: FirebaseCollections.TWEETS,
-    id: tweet.tweetId,
-    document: tweet,
-  });
-
   if (image) {
     await uploadFile({
       collection: FirebaseCollections.TWEETS,
@@ -33,6 +27,11 @@ export const createNewTweet = async (options: INewTweet) => {
 
     tweet.image = url;
   }
+  await createDocument({
+    collection: FirebaseCollections.TWEETS,
+    id: tweet.tweetId,
+    document: tweet,
+  });
 
   return tweet;
 };

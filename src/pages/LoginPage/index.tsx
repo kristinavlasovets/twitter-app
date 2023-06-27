@@ -6,8 +6,7 @@ import { AppRoutes } from '@/components/AppRouter/types';
 import Button from '@/components/Button';
 import Loader from '@/components/Loader';
 import { Colors, icons, loginPageText, validationErrors } from '@/constants';
-import { useActions } from '@/hooks/useActions';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useActions, useAppSelector } from '@/hooks';
 import { commonTheme } from '@/styles/theme';
 
 import { ErrorText, Icon, Input, TextLink, Title, Wrapper } from './styles';
@@ -19,7 +18,6 @@ const {
   title,
   maxLengthValue,
   minLengthValue,
-  twitterLogoAlt,
   emailPlaceholder,
   passwordPlaceholder,
   buttonText,
@@ -36,7 +34,7 @@ const LoginPage: FC = () => {
     formState: { errors },
   } = useForm<LoginFormInputProps>({ mode: 'onChange' });
 
-  const onHandlerLogin: SubmitHandler<LoginFormInputProps> = async ({ email, password }) => {
+  const handleLogin: SubmitHandler<LoginFormInputProps> = async ({ email, password }) => {
     try {
       setUserThunk({ email, password });
     } catch (e) {
@@ -51,8 +49,8 @@ const LoginPage: FC = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <Wrapper onSubmit={handleSubmit(onHandlerLogin)}>
-      <Icon src={MyLogoSvg} alt={twitterLogoAlt} />
+    <Wrapper onSubmit={handleSubmit(handleLogin)}>
+      <Icon src={MyLogoSvg} alt="Twitter Logo" />
       <Title>{title}</Title>
       {isError && <ErrorText data-cy="loginErrorText">{isError}</ErrorText>}
       <Input

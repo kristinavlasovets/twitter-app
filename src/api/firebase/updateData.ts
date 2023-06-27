@@ -32,7 +32,8 @@ export const updateUser = async ({
   telegram,
 }: UpdateUserProps) => {
   const user = auth.currentUser!;
-  const { uid } = user!;
+
+  const { uid } = user;
   const udpatedNameLowercase = name.toLowerCase();
 
   if (!telegram.includes('@')) {

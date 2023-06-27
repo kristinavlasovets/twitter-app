@@ -18,13 +18,18 @@ export const uploadFile = async (options: UploadFileProps) => {
   const storageRef = ref(storage, id);
   const uploadTask = uploadBytesResumable(storageRef, file);
 
-  uploadTask.on('state_changed', () => {
-    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      updateDocument({
-        collection,
-        id,
-        newDoc: { image: downloadURL },
+  uploadTask.on(
+    'state_changed',
+    () => {},
+    () => {},
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+        await updateDocument({
+          collection,
+          id,
+          newDoc: { image: downloadURL },
+        });
       });
-    });
-  });
+    }
+  );
 };
